@@ -1,344 +1,920 @@
 <!DOCTYPE html>
-<!-- saved from url=(0034)https://aistudio.xiaomimimo.com/#/ -->
-<html class="dark" lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>body {transition: opacity ease-in 0.2s; } 
-body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relative; } 
-</style><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><link rel="shortcut icon" href="https://aistudio.xiaomimimo.com/favicon.0619b0d2.png"><title>Xiaomi MiMo Studio</title><style type="text/css">.rfm-marquee-container {
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: row;
-  position: relative;
-  width: var(--width);
-  transform: var(--transform);
-}
-.rfm-marquee-container:hover div {
-  animation-play-state: var(--pause-on-hover);
-}
-.rfm-marquee-container:active div {
-  animation-play-state: var(--pause-on-click);
-}
-
-.rfm-overlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-.rfm-overlay::before, .rfm-overlay::after {
-  background: linear-gradient(to right, var(--gradient-color), rgba(255, 255, 255, 0));
-  content: "";
-  height: 100%;
-  position: absolute;
-  width: var(--gradient-width);
-  z-index: 2;
-  pointer-events: none;
-  touch-action: none;
-}
-.rfm-overlay::after {
-  right: 0;
-  top: 0;
-  transform: rotateZ(180deg);
-}
-.rfm-overlay::before {
-  left: 0;
-  top: 0;
-}
-
-.rfm-marquee {
-  flex: 0 0 auto;
-  min-width: var(--min-width);
-  z-index: 1;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  animation: scroll var(--duration) linear var(--delay) var(--iteration-count);
-  animation-play-state: var(--play);
-  animation-delay: var(--delay);
-  animation-direction: var(--direction);
-}
-@keyframes scroll {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
-.rfm-initial-child-container {
-  flex: 0 0 auto;
-  display: flex;
-  min-width: auto;
-  flex-direction: row;
-  align-items: center;
-}
-
-.rfm-child {
-  transform: var(--transform);
-}</style><style type="text/css">.transform-component-module_wrapper__SPB86 {
-  position: relative;
-  width: -moz-fit-content;
-  width: fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-  overflow: hidden;
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none;
-  margin: 0;
-  padding: 0;
-  transform: translate3d(0, 0, 0);
-}
-.transform-component-module_content__FBWxo {
-  display: flex;
-  flex-wrap: wrap;
-  width: -moz-fit-content;
-  width: fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-  margin: 0;
-  padding: 0;
-  transform-origin: 0% 0%;
-}
-.transform-component-module_content__FBWxo img {
-  pointer-events: none;
-}
-</style><style type="text/css">.relative{position:relative}.defaultStyles pre{overflow:auto;border-radius:.5rem;padding:1.25rem 1.5rem}.languageLabel{position:absolute;right:.75rem;top:.5rem;font-family:monospace;font-size:.75rem;letter-spacing:-.05em;color:#6b7280d9}
-</style></head><body style="background: rgb(24, 24, 27);"><script>(function() {
-        // 设置语言属性
-        function setLanguage() {
-          var locale = localStorage.getItem('locale');
-          if (locale) {
-            document.documentElement.lang = locale;
-          }
-        }
-        
-        function setBodyBg(theme) {
-          var html = document.documentElement;
-          if (theme === 'dark') {
-            document.body.style.background = '#18181b';
-            html.className = 'dark';
-          } else if (theme === 'light') {
-            document.body.style.background = '#ffffff';
-            html.className = 'light';
-          } else {
-            // system: 跟随系统
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-              document.body.style.background = '#18181b';
-              html.className = 'dark';
-            } else {
-              document.body.style.background = '#ffffff';
-              html.className = 'light';
-            }
-          }
-        }
-        var theme = localStorage.getItem('theme') || 'system';
-        setBodyBg(theme);
-        setLanguage();
-      })();</script><script>// 最小兜底：仅在运行时错误或白屏时展示“浏览器版本过低/不兼容”
-      (function() {
-        var shown = false;
-
-        function getBrowserLocale() {
-          var nav = window.navigator || {};
-          var lang = '';
-          if (nav.languages && nav.languages.length) {
-            lang = nav.languages[0];
-          } else {
-            lang = nav.language || nav.userLanguage || '';
-          }
-          return (lang || '').toLowerCase();
-        }
-
-        function getI18nText() {
-          var locale = getBrowserLocale();
-          var isZh = locale.indexOf('zh') === 0;
-
-          return {
-            title: isZh ? '加载失败' : 'Load Failed',
-            desc: isZh
-              ? '当前浏览器版本低，请升级后重试'
-              : 'Your browser version is too low. Please upgrade and try again.'
-          };
-        }
-
-        function isDarkMode() {
-          var html = document.documentElement;
-          var cls = (html && html.className) || '';
-          return cls.indexOf('dark') !== -1;
-        }
-
-        function showFallback() {
-          if (shown) return;
-          shown = true;
-
-          var root = document.getElementById('root');
-          if (!root) return;
-
-          var text = getI18nText();
-          var dark = isDarkMode();
-          var fg = dark ? 'rgba(255,255,255,0.92)' : 'rgba(0,0,0,0.88)';
-          var sub = dark ? 'rgba(255,255,255,0.72)' : 'rgba(0,0,0,0.60)';
-
-          root.innerHTML =
-            '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,\'Segoe UI\',\'PingFang SC\',\'Microsoft YaHei\',sans-serif;color:' + fg + ';">' +
-              '<div style="width:100%;max-width:560px;text-align:center;">' +
-                '<div style="display:flex;justify-content:center;margin:0 0 16px;">' +
-                  '<img alt="" src="https://aistudio-cdn.xiaomimimo.com/xiaomimimo-static/svg/loadFailed.svg" style="width:120px;height:120px;" />' +
-                '</div>' +
-                '<h1 style="margin:0 0 10px;font-size:18px;line-height:1.4;font-weight:600;">' + text.title + '</h1>' +
-                '<p style="margin:0;font-size:13px;line-height:1.6;color:' + sub + ';">' + text.desc + '</p>' +
-              '</div>' +
-            '</div>';
-        }
-
-        // 30 秒后检查 root 是否渲染（白屏兜底）
-        setTimeout(function() {
-          var root = document.getElementById('root');
-          if (root && (!root.children || root.children.length === 0)) {
-            showFallback();
-          }
-        }, 30000);
-      })();</script><link rel="stylesheet" type="text/css" href="./index_files/4358.79e2bb3d.chunk.css"><link rel="stylesheet" type="text/css" href="./index_files/main.e2904b27.chunk.css"><link rel="stylesheet" type="text/css" href="./index_files/9779.30fc1413.chunk.css"><link id="react-template-css-before"><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"><div class="absolute inset-0 flex flex-col overflow-hidden md:bg-mimo-bg-body md:p-1.5"><div class="flex flex-1 overflow-hidden"><div class="fixed inset-0 z-50 bg-black/40 transition-opacity duration-300 dark:bg-white/10 pointer-events-none opacity-0" style="touch-action: none;"></div><div class="fixed top-0 z-50 h-full shadow-lg transition-transform duration-300 ease-in-out dark:bg-mimo-bg-body left-0 w-[16rem] pointer-events-none -translate-x-full bg-mimo-bg-body" style="will-change: transform;"><div class="flex h-full flex-col"><div class="flex h-full flex-col overflow-hidden pb-2"><div class="my-2 flex h-11 items-center justify-between px-4"><button type="button"><div class="overflow-hidden -mt-0.5 w-[9.5625rem]" style="aspect-ratio: 6480 / 546;"><img alt="Xiaomi MiMo Studio" class="block h-full w-auto max-w-none dark:hidden" draggable="false" src="./index_files/logo.d8da8623.webp"><img alt="Xiaomi MiMo Studio" class="hidden h-full w-auto max-w-none dark:block" draggable="false" src="./index_files/logoDark.7bbe3994.webp"></div></button><div class="-mr-1 flex items-center"><button type="button" class="flex items-center justify-center rounded-[0.375rem] text-mimo-icon-n2 transition-colors hover:bg-mimo-fill-neutral-hover h-8 w-8" aria-label="Hide sidebar" data-track-id="sidebar_collapse_btn" data-track-name="sidebar_collapse" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18" class="h-[1.125rem] w-[1.125rem] text-mimo-icon-n2"><path fill="currentColor" d="M13.779 1.913c1.834 0 3.321 1.563 3.321 3.492v7.19c0 1.929-1.487 3.493-3.321 3.493H4.22C2.387 16.088.9 14.524.9 12.595v-7.19c0-1.929 1.487-3.492 3.321-3.492zM4.22 3.31c-1.1 0-1.992.938-1.992 2.095v7.19c0 1.157.892 2.095 1.992 2.095h2.783V3.31zm4.112 11.38h5.446c1.1 0 1.992-.938 1.992-2.095v-7.19c0-1.157-.892-2.095-1.992-2.095H8.333zM5.413 7.77c.366 0 .664.312.664.698s-.298.699-.665.699H3.896c-.367 0-.664-.313-.664-.699s.297-.698.664-.698zm0-2.682c.366 0 .664.313.664.698 0 .386-.298.699-.665.699H3.896c-.367 0-.664-.313-.664-.699s.297-.698.664-.698z"></path></svg></button><button type="button" class="flex items-center justify-center rounded-[0.375rem] text-mimo-icon-n2 transition-colors hover:bg-mimo-fill-neutral-hover h-8 w-8" aria-label="New conversation" data-track-id="sidebar_new_chat_btn" data-track-name="sidebar_new_chat" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18" class="h-[1.125rem] w-[1.125rem] text-mimo-icon-n2"><path fill="currentColor" d="M8.824 1.627c.389 0 .704.326.704.727a.716.716 0 0 1-.704.728H4.246c-1.07 0-1.937.895-1.937 2v7.275c0 1.104.867 2 1.937 2h.637c.465 0 .925.1 1.351.294l1.807.824a1.89 1.89 0 0 0 1.565 0l1.808-.824a3.3 3.3 0 0 1 1.351-.294h.637c1.07 0 1.937-.896 1.937-2V8.719c0-.402.316-.727.705-.727s.704.325.704.727v3.638c0 1.907-1.498 3.454-3.346 3.454h-.637c-.27 0-.536.058-.782.17l-1.808.824a3.26 3.26 0 0 1-2.703 0l-1.807-.824a1.9 1.9 0 0 0-.782-.17h-.637C2.398 15.811.9 14.264.9 12.357V5.082c0-1.908 1.498-3.455 3.346-3.455zM13.578.9c.39 0 .705.326.705.727V3.81h2.113c.389 0 .704.326.704.727a.716.716 0 0 1-.704.727h-2.113v2.182a.716.716 0 0 1-.705.727.716.716 0 0 1-.704-.727V5.263H10.76a.716.716 0 0 1-.704-.727c0-.401.315-.727.704-.727h2.113V1.627c0-.401.315-.727.704-.727"></path></svg></button></div></div><div class="flex flex-col gap-2 pl-2 pr-3.5"><button type="button" class="flex items-center gap-2 rounded-md p-2 text-sm font-normal text-mimo-text-h1-title bg-mimo-fill-neutral-active" aria-label="MiMo Claw" data-track-id="sidebar_nav_claw_btn" data-track-name="sidebar_nav_claw"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 15" class="h-4 w-4 shrink-0 text-mimo-icon-n1"><path fill="currentColor" d="M8.682.875a7.3 7.3 0 0 1 4.1 1.235c.839.566.327 1.67-.653 1.978l-.3.102c-.683.256-1.233.627-1.233 1.16l-.002.19a6.2 6.2 0 0 1-.358 1.89l.003-.001c.252.4.619.615 1.237.78.319.084.683.15 1.115.222.424.071.908.148 1.425.255 1.194.247 1.87 1.559 1.05 2.56a7.6 7.6 0 0 1-3.295 2.313 8.1 8.1 0 0 1-4.656.275 7.2 7.2 0 0 1-3.217-1.596c-.17-.147-.774-.23-1.312-.275l-.497-.033a.7.7 0 0 1-.55-.304l-.044-.08-.907-1.964a.61.61 0 0 1 .096-.655c.341-.403.905-1.107.973-1.43l.008-.06c0-3.624 3.141-6.562 7.017-6.562m.939 7.809a6.7 6.7 0 0 1-1.577 1.728c-.651.503-.418 1.5-.064 2.315q.168.025.336.043a6.7 6.7 0 0 0 2.971-.375 6.3 6.3 0 0 0 2.721-1.911.3.3 0 0 0 .054-.33.45.45 0 0 0-.333-.247c-.485-.1-.936-.172-1.373-.245a14 14 0 0 1-1.242-.25c-.547-.146-1.064-.358-1.493-.728m-.939-6.559c-3.143 0-5.684 2.382-5.684 5.313 0 .39-.175.723-.242.85-.098.185-.22.37-.334.53-.145.207-.31.415-.458.598l.597 1.292c.24.018.507.042.762.077.202.028.43.067.642.124.13.034.44.119.722.32l.118.094.195.162c.428.34.911.62 1.434.832a3.9 3.9 0 0 1-.135-.94c-.005-.607.18-1.375.898-1.93l.231-.189c1.13-.973 1.835-2.364 1.835-3.909 0-.826.505-1.403.97-1.745.442-.326.973-.542 1.434-.689a5.95 5.95 0 0 0-2.985-.79"></path></svg><span class="shrink-0">MiMo Claw</span><span class="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded bg-mimo-tag-gradient-bg border-mimo-tag-gradient-border border-[0.0375rem] border-solid h-5 px-1.5"><span class="bg-clip-text text-transparent text-xs font-normal leading-5" style="background-image: var(--mimo-tag-gradient-text);">Free Trial</span></span></button><button type="button" class="flex items-center gap-2 rounded-md p-2 text-sm font-normal text-mimo-text-h1-title hover:bg-mimo-fill-neutral-hover" aria-label="MiMo Chat" data-track-id="sidebar_nav_chat_btn" data-track-name="sidebar_nav_chat"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 15" class="h-4 w-4 shrink-0 text-mimo-icon-n1"><path fill="currentColor" d="M6 5.625h4.667c.333 0 .666.249.666.625 0 .313-.258.625-.666.625H6.013c-.414 0-.68-.312-.68-.625 0-.376.334-.625.667-.625M6 8.125h2.659c.411 0 .674.313.674.625a.645.645 0 0 1-.666.625H6c-.333 0-.667-.249-.667-.625s.334-.625.667-.625"></path><path fill="currentColor" d="m2.26 12.958.704-.943C1.829 10.92 1.104 9.47 1.01 7.867A6 6 0 0 1 1 7.5C1 3.876 4.224.938 8.202.938h.131c1.741 0 3.333.595 4.558 1.58A6.6 6.6 0 0 1 15 5.329c.014.038.333 1.276.333 2.172 0 3.36-2.692 6.129-6.163 6.516h-.002q-.41.045-.835.046h-5.43c-.623 0-.992-.635-.642-1.104m5.58-.146h.493c3.13 0 5.667-2.378 5.667-5.312 0-.335-.063-.782-.14-1.187a12 12 0 0 0-.135-.614 5.35 5.35 0 0 0-1.688-2.22l-.008-.006-.007-.006a5.87 5.87 0 0 0-3.741-1.28h-.079C4.925 2.188 2.333 4.6 2.333 7.5q0 .15.01.296V7.8c.073 1.286.654 2.455 1.576 3.343l.77.74-.693.93H7.84m5.875-7.15.001.002c-.004-.014-.005-.018 0-.002"></path></svg><span class="shrink-0">MiMo Chat</span></button></div><div class="flex flex-1 flex-col overflow-hidden mt-1.5"><div class="select-none px-4 py-2.5"><p class="text-xs text-gray-400 dark:text-gray-500">History</p></div><div class="hide-scrollbar flex flex-1 flex-col gap-1 overflow-y-auto px-2 pl-2 pr-[0.875rem]"><div class=""><div class="group flex h-8 min-h-8 min-w-0 select-none items-center rounded-[0.625rem] pl-2 pr-1 transition-colors cursor-pointer hover:bg-black/5 dark:hover:bg-white/10"><span class="min-w-0 flex-1 truncate text-sm text-gray-900 dark:text-gray-50">Portrait d'une vie blog</span><div class=""><div class="flex items-center justify-center" aria-disabled="false"><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-6 h-6 rounded bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 duration-75 active:scale-95 transition-opacity opacity-0 group-hover:opacity-100" aria-label="More actions"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="h-4 w-4 text-gray-900 dark:text-gray-50"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M11 12a1 1 0 1 0 2 0 1 1 0 1 0-2 0M11 19a1 1 0 1 0 2 0 1 1 0 1 0-2 0M11 5a1 1 0 1 0 2 0 1 1 0 1 0-2 0"></path></svg></button></div></div></div></div></div></div><div class="mt-2 w-full flex-col items-center pl-2 pr-2 md:pr-[0.875rem]"><div class="flex items-center justify-center w-full" aria-disabled="false"><button type="button" class="inline-flex relative items-center outline-none select-none cursor-pointer px-4 text-sm min-h-[32px] rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed hover:bg-black/5 dark:hover:bg-white/10 hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95 w-full justify-start py-2 pl-2" data-track-id="sidebar_user_menu_btn" data-track-name="sidebar_user_menu"><div class="mr-1 flex size-6 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="size-4 text-[#646A73] dark:text-gray-400"><path fill="currentColor" fill-rule="evenodd" d="M6 5a2 2 0 1 1 4 0 2 2 0 0 1-4 0m2-3.333a3.333 3.333 0 1 0 0 6.666 3.333 3.333 0 0 0 0-6.666M5.334 9c-.96 0-1.87.292-2.552.87-.693.586-1.115 1.439-1.115 2.463v1a1 1 0 0 0 1 1h10.667a1 1 0 0 0 1-1v-1c0-1.024-.422-1.877-1.115-2.463-.682-.578-1.592-.87-2.552-.87zM3 12.333c0-.633.25-1.113.643-1.446.404-.341.993-.554 1.69-.554h5.334c.697 0 1.287.213 1.69.554.394.333.643.813.643 1.446V13H3z" clip-rule="evenodd"></path></svg></div><span class="text-sm">6450071512</span></button></div></div></div></div></div><div class="flex flex-1 flex-col overflow-hidden"><div class="flex flex-1 overflow-hidden bg-mimo-bg-concent-base sm:rounded-lg"><div class="flex flex-1 flex-col overflow-hidden"><div class="relative flex h-11 items-center overflow-hidden rounded-lg bg-[linear-gradient(to_right,#f2f5ff,#edf2ff_50%,#f0ebff)] dark:bg-[linear-gradient(to_right,rgba(42,44,72,0.7),rgba(42,38,65,0.65)_50%,rgba(50,44,75,0.68))] px-4 mx-px mt-px"><div class="pointer-events-none absolute left-[-0.25rem] top-[-4.9375rem] h-[9.3125rem] w-[9.125rem] dark:opacity-40" aria-hidden="true"><svg width="146" height="44" viewBox="0 0 146 44" fill="none" xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 h-full w-full"><g filter="url(#filter0_f_banner_1)"><ellipse cx="66.5" cy="-12.5" rx="70.5" ry="66.5" fill="url(#paint0_radial_banner_1)" fill-opacity="0.5"></ellipse></g><defs><filter id="filter0_f_banner_1" x="-13" y="-88" width="159" height="151" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feflood flood-opacity="0" result="BackgroundImageFix"></feflood><feblend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feblend><fegaussianblur stdDeviation="4.5" result="effect1_foregroundBlur_banner_1"></fegaussianblur></filter><radialgradient id="paint0_radial_banner_1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(66.5 -12.5) scale(141 133)"><stop stop-color="#9966FF" stop-opacity="0.12"></stop><stop offset="0.6" stop-color="#9966FF" stop-opacity="0.024"></stop><stop offset="1" stop-color="#9966FF" stop-opacity="0"></stop></radialgradient></defs></svg></div><div class="pointer-events-none absolute left-[-1rem] top-[-5.5625rem] h-[10.8125rem] w-[9.9375rem] dark:opacity-40" aria-hidden="true"><svg width="159" height="44" viewBox="0 0 159 44" fill="none" xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 h-full w-full"><g filter="url(#filter0_f_banner_2)"><ellipse cx="66.5" cy="-12.5" rx="82.5" ry="76.5" fill="url(#paint0_radial_banner_2)" fill-opacity="0.4"></ellipse></g><defs><filter id="filter0_f_banner_2" x="-26" y="-99" width="185" height="173" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feflood flood-opacity="0" result="BackgroundImageFix"></feflood><feblend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feblend><fegaussianblur stdDeviation="5" result="effect1_foregroundBlur_banner_2"></fegaussianblur></filter><radialgradient id="paint0_radial_banner_2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(66.5 -12.5) scale(165 153)"><stop stop-color="#7380FF" stop-opacity="0.1"></stop><stop offset="0.6" stop-color="#7380FF" stop-opacity="0.02"></stop><stop offset="1" stop-color="#7380FF" stop-opacity="0"></stop></radialgradient></defs></svg></div><div class="absolute inset-x-0 z-10 flex items-center justify-center gap-[0.375rem] px-10"><img alt="" aria-hidden="true" class="h-6 w-6 flex-none" src="./index_files/new-model-announcement.3050e7e5.png"><p class="min-w-0 truncate text-sm font-medium leading-5 text-mimo-text-h1-title"><span class="md:hidden">Xiaomi MiMo-V2.5 Open Beta Now Live</span><span class="hidden md:inline">Xiaomi MiMo-V2.5 Open Beta Now Live: MiMo-V2.5-Pro with significantly enhanced long-horizon reasoning &amp; Agent; MiMo-V2.5 full-modality 1M context; MiMo-V2.5-TTS series now with voice cloning &amp; fine-grained control</span></p></div><button type="button" aria-label="Dismiss" class="relative z-10 ml-auto flex h-[1.375rem] w-[1.375rem] flex-none items-center justify-center rounded text-mimo-icon-n2 transition-colors hover:bg-mimo-fill-neutral-hover active:bg-mimo-fill-neutral-active"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5"><path d="M11.8166 11.8156C12.0444 11.5878 12.0461 11.2201 11.8183 10.9923L7.82547 6.99951L11.8182 3.00674C12.046 2.77894 12.0444 2.41124 11.8166 2.18343C11.5888 1.95563 11.2211 1.95398 10.9933 2.18178C10.7655 2.40959 7.00051 6.17455 7.00051 6.17455L3.00771 2.18175C2.77991 1.95394 2.41221 1.9556 2.18441 2.1834C1.9566 2.41121 1.95495 2.7789 2.18275 3.00671L6.17555 6.99951L2.18273 10.9923C1.95492 11.2201 1.95657 11.5878 2.18438 11.8156C2.41218 12.0434 2.77988 12.0451 3.00768 11.8173L7.00051 7.82446L10.9933 11.8173C11.2211 12.0451 11.5888 12.0434 11.8166 11.8156Z" fill="currentColor"></path></svg></button></div><nav class="relative flex items-center bg-mimo-bg-concent-base p-3"><div class="flex min-w-0 flex-1 flex-shrink-0 items-center"><div class="flex items-center overflow-hidden transition-[transform,opacity,margin,max-width] duration-300 ease-in-out mr-2 max-w-full translate-x-0 scale-100 opacity-100" style="min-width: 0px;"><div class="flex items-center"><button type="button" class="flex items-center justify-center rounded-[0.375rem] text-mimo-icon-n2 transition-colors hover:bg-mimo-fill-neutral-hover h-8 w-8" aria-label="Show sidebar" data-track-id="navbar_sidebar_expand_btn" data-track-name="navbar_sidebar_expand" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18" class="h-[1.125rem] w-[1.125rem] text-mimo-icon-n2"><path fill="currentColor" d="M13.779 1.913c1.834 0 3.321 1.563 3.321 3.492v7.19c0 1.929-1.487 3.493-3.321 3.493H4.22C2.387 16.088.9 14.524.9 12.595v-7.19c0-1.929 1.487-3.492 3.321-3.492zM4.22 3.31c-1.1 0-1.992.938-1.992 2.095v7.19c0 1.157.892 2.095 1.992 2.095h2.783V3.31zm4.112 11.38h5.446c1.1 0 1.992-.938 1.992-2.095v-7.19c0-1.157-.892-2.095-1.992-2.095H8.333zM5.413 7.77c.366 0 .664.312.664.698s-.298.699-.665.699H3.896c-.367 0-.664-.313-.664-.699s.297-.698.664-.698zm0-2.682c.366 0 .664.313.664.698 0 .386-.298.699-.665.699H3.896c-.367 0-.664-.313-.664-.699s.297-.698.664-.698z"></path></svg></button><button type="button" class="flex items-center justify-center rounded-[0.375rem] text-mimo-icon-n2 transition-colors hover:bg-mimo-fill-neutral-hover h-8 w-8" aria-label="New conversation" data-track-id="navbar_new_chat_btn" data-track-name="navbar_new_chat" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18" class="h-[1.125rem] w-[1.125rem] text-mimo-icon-n2"><path fill="currentColor" d="M8.824 1.627c.389 0 .704.326.704.727a.716.716 0 0 1-.704.728H4.246c-1.07 0-1.937.895-1.937 2v7.275c0 1.104.867 2 1.937 2h.637c.465 0 .925.1 1.351.294l1.807.824a1.89 1.89 0 0 0 1.565 0l1.808-.824a3.3 3.3 0 0 1 1.351-.294h.637c1.07 0 1.937-.896 1.937-2V8.719c0-.402.316-.727.705-.727s.704.325.704.727v3.638c0 1.907-1.498 3.454-3.346 3.454h-.637c-.27 0-.536.058-.782.17l-1.808.824a3.26 3.26 0 0 1-2.703 0l-1.807-.824a1.9 1.9 0 0 0-.782-.17h-.637C2.398 15.811.9 14.264.9 12.357V5.082c0-1.908 1.498-3.455 3.346-3.455zM13.578.9c.39 0 .705.326.705.727V3.81h2.113c.389 0 .704.326.704.727a.716.716 0 0 1-.704.727h-2.113v2.182a.716.716 0 0 1-.705.727.716.716 0 0 1-.704-.727V5.263H10.76a.716.716 0 0 1-.704-.727c0-.401.315-.727.704-.727h2.113V1.627c0-.401.315-.727.704-.727"></path></svg></button></div></div><div class="flex items-center"><span class="select-none text-sm font-medium leading-[1.375rem] text-mimo-text-h1-title">MiMo Claw</span></div></div><div class="pointer-events-none absolute left-1/2 top-1/2 z-10 flex min-w-0 flex-none -translate-x-1/2 -translate-y-1/2 items-center justify-center"><div class="pointer-events-auto"><p class="select-none text-lg text-gray-900 transition-opacity duration-300 dark:text-gray-50 opacity-0 "></p></div></div><div class="flex min-w-0 items-center justify-end"><div class="flex items-center gap-2"><div class="flex h-7 items-center gap-[6px] rounded-md border pl-2 border-mimo-line-blue bg-mimo-fill-blue"><div class="flex shrink-0 cursor-default items-center rounded px-2 py-1" data-state="closed"><span class="inline-flex items-center whitespace-nowrap text-center text-sm font-medium leading-5 text-mimo-blue-05"><span>Time left</span><span class="ml-0.5 inline-flex w-10 justify-center text-center tabular-nums">34:37</span></span></div><button type="button" class="flex h-7 w-[4.6875rem] shrink-0 items-center justify-center rounded-md px-1.5 bg-mimo-btn-primary-bg-default transition-colors hover:bg-mimo-btn-primary-bg-hover"><span class="whitespace-nowrap text-center text-xs leading-4 text-mimo-btn-primary-text">Stop using</span></button></div><button type="button" class="flex h-8 w-8 items-center justify-center rounded-[0.375rem] text-mimo-icon-n2 transition-colors hover:bg-mimo-fill-neutral-hover" aria-label="API Service" data-track-id="claw_api_platform_btn" data-track-name="claw_api_platform" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="h-[1.125rem] w-[1.125rem] text-mimo-icon-n2"><path fill="currentColor" d="m15.245 1.515-.757-.758a.148.148 0 0 0-.204 0l-1.359 1.36a3.56 3.56 0 0 0-2.002-.613c-.914 0-1.828.348-2.526 1.046l-1.82 1.82a.143.143 0 0 0 0 .202l4.852 4.851a.14.14 0 0 0 .102.042.15.15 0 0 0 .101-.042l1.82-1.82a3.575 3.575 0 0 0 .434-4.526l1.359-1.359a.145.145 0 0 0 0-.203m-2.654 5.23-1.06 1.06L8.195 4.47l1.06-1.06a2.35 2.35 0 0 1 1.668-.692c.63 0 1.222.245 1.668.691s.691 1.038.691 1.668-.246 1.221-.69 1.668M9.195 8.62a.143.143 0 0 0-.202 0l-1.19 1.19-1.612-1.613 1.191-1.191a.143.143 0 0 0 0-.202l-.65-.65a.143.143 0 0 0-.201 0l-1.192 1.19-.767-.767a.14.14 0 0 0-.102-.041.15.15 0 0 0-.102.041L2.55 8.397a3.575 3.575 0 0 0-.434 4.526l-1.359 1.36a.143.143 0 0 0 0 .201l.757.757a.148.148 0 0 0 .204 0l1.359-1.359a3.56 3.56 0 0 0 2.002.613c.914 0 1.828-.348 2.527-1.047l1.82-1.82a.143.143 0 0 0 0-.201l-.769-.768 1.191-1.19a.143.143 0 0 0 0-.203zm-2.45 3.971a2.34 2.34 0 0 1-1.668.691 2.34 2.34 0 0 1-1.668-.69 2.34 2.34 0 0 1-.691-1.669c0-.63.245-1.221.691-1.667l1.06-1.061 3.337 3.336z"></path></svg></button><button type="button" class="flex h-8 w-8 items-center justify-center rounded-[0.375rem] text-mimo-icon-n2 transition-colors hover:bg-mimo-fill-neutral-hover" aria-label="Files" data-track-id="claw_files_panel_btn" data-track-name="claw_files_panel" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" class="h-[1.125rem] w-[1.125rem] text-mimo-icon-n2"><path fill="currentColor" d="M3.649 2.083H10.1a2 2 0 0 1 1.66.883l.707 1.05a1 1 0 0 0 .83.442h3.146q.993 0 1.696.696.703.695.703 1.679v8.708q0 .984-.703 1.68a2.32 2.32 0 0 1-1.696.695H3.649a2.32 2.32 0 0 1-1.696-.695 2.28 2.28 0 0 1-.703-1.68V4.458q0-.983.703-1.68a2.32 2.32 0 0 1 1.696-.695m8.803 3.958a1 1 0 0 1-.839-.455l-.655-1.01a2 2 0 0 0-1.678-.91H3.65q-.331 0-.565.232a.76.76 0 0 0-.235.56V15.54q0 .328.235.56a.77.77 0 0 0 .565.232h12.795q.33 0 .565-.232a.76.76 0 0 0 .234-.56V6.833a.76.76 0 0 0-.234-.56.77.77 0 0 0-.565-.232z"></path><path fill="currentColor" d="M14.167 9.167a.833.833 0 0 1 0 1.667H5.833a.833.833 0 0 1 0-1.667z"></path></svg></button><span class=""></span></div></div></nav><div class="flex min-h-0 flex-1 overflow-hidden"><div class="flex min-w-0 flex-1 flex-col overflow-hidden"><div class="relative flex flex-1 flex-col overflow-hidden"><div class="relative flex-1 overflow-hidden"><div id="claw-message-list" class="absolute inset-0 overflow-y-auto pl-5 pr-4 pt-3 [scrollbar-gutter:stable]"><div class="relative flex w-full mx-auto max-w-[50rem]"><div class="group flex min-w-0 flex-1 gap-2 flex-row-reverse"><div class="flex min-w-0 flex-1 flex-col gap-1 items-end"><div class="flex w-full flex-row-reverse" dir="ltr"><div class="flex min-w-0 flex-col gap-2 max-w-[90%] items-end"><div class="relative inline-block whitespace-pre-wrap rounded-lg bg-mimo-bg-message px-3 py-2 leading-normal text-gray-900 dark:text-gray-50 break-words" dir="ltr">Génère un site innovant pour mettre une série de biographie.</div></div></div><div class="group/clip flex h-[24px] items-center space-x-1"><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95 invisible group-hover:visible" data-track-id="msg_copy_btn" data-track-name="msg_copy" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="size-5 text-gray-500 dark:text-gray-500"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"></path><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"></path></svg></button></div></div></div></div><div class="mx-auto mb-3 flex w-full max-w-[50rem] flex-col gap-3"><button type="button" class="group flex h-7 items-center gap-1 overflow-hidden rounded-full border-[0.5px] px-3 py-1 transition-colors border-mimo-line-border-card bg-mimo-bg-outlined hover:bg-mimo-fill-neutral-hover max-w-full self-start"><span class="flex shrink-0 items-center transition-colors text-mimo-icon-n3 group-hover:text-mimo-icon-n2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="h-3.5 w-3.5"><path fill="currentColor" d="m6.559 12.4-4.375-2.084a.88.88 0 0 1-.434-.756V4.44a.88.88 0 0 1 .434-.756L6.559 1.6a.88.88 0 0 1 .882 0l4.375 2.085a.87.87 0 0 1 .434.756v5.12a.88.88 0 0 1-.434.756l-4.375 2.085a.88.88 0 0 1-.882 0M7 11.646l4.375-2.085V4.44L7 2.355 2.625 4.44v5.12zm1.963-6.453L6.938 6.645l-2.09-1.456a.437.437 0 1 0-.5.717l2.206 1.538a.4.4 0 0 0-.02.12v2.5l.003.053a.4.4 0 0 0 .405.33c.225 0 .408-.171.408-.383v-2.5l-.003-.053a.4.4 0 0 0-.018-.07l2.144-1.538a.438.438 0 1 0-.51-.71z"></path></svg></span><div class="min-w-0 flex-1 truncate text-xs font-normal leading-5 transition-colors text-mimo-text-h3-placeholder group-hover:text-mimo-text-h1-title">read ~/.openclaw/skills/frontend-design/SKILL.md</div></button><button type="button" class="group flex h-7 items-center gap-1 overflow-hidden rounded-full border-[0.5px] px-3 py-1 transition-colors border-mimo-line-border-card bg-mimo-bg-outlined hover:bg-mimo-fill-neutral-hover max-w-full self-start"><span class="flex shrink-0 items-center transition-colors text-mimo-icon-n3 group-hover:text-mimo-icon-n2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="h-3.5 w-3.5"><path fill="currentColor" d="m6.559 12.4-4.375-2.084a.88.88 0 0 1-.434-.756V4.44a.88.88 0 0 1 .434-.756L6.559 1.6a.88.88 0 0 1 .882 0l4.375 2.085a.87.87 0 0 1 .434.756v5.12a.88.88 0 0 1-.434.756l-4.375 2.085a.88.88 0 0 1-.882 0M7 11.646l4.375-2.085V4.44L7 2.355 2.625 4.44v5.12zm1.963-6.453L6.938 6.645l-2.09-1.456a.437.437 0 1 0-.5.717l2.206 1.538a.4.4 0 0 0-.02.12v2.5l.003.053a.4.4 0 0 0 .405.33c.225 0 .408-.171.408-.383v-2.5l-.003-.053a.4.4 0 0 0-.018-.07l2.144-1.538a.438.438 0 1 0-.51-.71z"></path></svg></span><div class="min-w-0 flex-1 truncate text-xs font-normal leading-5 transition-colors text-mimo-text-h3-placeholder group-hover:text-mimo-text-h1-title">read /root/.openclaw/skills/frontend-design/SKILL.md</div></button></div><div class="mx-auto mb-3 flex w-full max-w-[50rem] flex-col gap-3"><button type="button" class="group flex h-7 items-center gap-1 overflow-hidden rounded-full border-[0.5px] px-3 py-1 transition-colors border-mimo-line-border-card bg-mimo-bg-outlined hover:bg-mimo-fill-neutral-hover max-w-full self-start"><span class="flex shrink-0 items-center transition-colors text-mimo-icon-n3 group-hover:text-mimo-icon-n2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="h-3.5 w-3.5"><path fill="currentColor" d="m6.559 12.4-4.375-2.084a.88.88 0 0 1-.434-.756V4.44a.88.88 0 0 1 .434-.756L6.559 1.6a.88.88 0 0 1 .882 0l4.375 2.085a.87.87 0 0 1 .434.756v5.12a.88.88 0 0 1-.434.756l-4.375 2.085a.88.88 0 0 1-.882 0M7 11.646l4.375-2.085V4.44L7 2.355 2.625 4.44v5.12zm1.963-6.453L6.938 6.645l-2.09-1.456a.437.437 0 1 0-.5.717l2.206 1.538a.4.4 0 0 0-.02.12v2.5l.003.053a.4.4 0 0 0 .405.33c.225 0 .408-.171.408-.383v-2.5l-.003-.053a.4.4 0 0 0-.018-.07l2.144-1.538a.438.438 0 1 0-.51-.71z"></path></svg></span><div class="min-w-0 flex-1 truncate text-xs font-normal leading-5 transition-colors text-mimo-text-h3-placeholder group-hover:text-mimo-text-h1-title">write /root/.openclaw/workspace/biographie-site/index.html</div></button><button type="button" class="group flex h-7 items-center gap-1 overflow-hidden rounded-full border-[0.5px] px-3 py-1 transition-colors border-mimo-line-border-card bg-mimo-bg-outlined hover:bg-mimo-fill-neutral-hover max-w-full self-start"><span class="flex shrink-0 items-center transition-colors text-mimo-icon-n3 group-hover:text-mimo-icon-n2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="h-3.5 w-3.5"><path fill="currentColor" d="m6.559 12.4-4.375-2.084a.88.88 0 0 1-.434-.756V4.44a.88.88 0 0 1 .434-.756L6.559 1.6a.88.88 0 0 1 .882 0l4.375 2.085a.87.87 0 0 1 .434.756v5.12a.88.88 0 0 1-.434.756l-4.375 2.085a.88.88 0 0 1-.882 0M7 11.646l4.375-2.085V4.44L7 2.355 2.625 4.44v5.12zm1.963-6.453L6.938 6.645l-2.09-1.456a.437.437 0 1 0-.5.717l2.206 1.538a.4.4 0 0 0-.02.12v2.5l.003.053a.4.4 0 0 0 .405.33c.225 0 .408-.171.408-.383v-2.5l-.003-.053a.4.4 0 0 0-.018-.07l2.144-1.538a.438.438 0 1 0-.51-.71z"></path></svg></span><div class="min-w-0 flex-1 truncate text-xs font-normal leading-5 transition-colors text-mimo-text-h3-placeholder group-hover:text-mimo-text-h1-title">canvas present</div></button></div><div class="relative flex w-full group mb-[16px] select-none mx-auto max-w-[50rem]"><div class="group flex min-w-0 flex-1 gap-2 flex-row"><div class="flex min-w-0 flex-1 flex-col gap-1 items-start"><div class="flex w-full flex-row" dir="ltr"><div class="flex min-w-0 flex-col gap-2 w-full flex-1 items-start"><div class="w-full flex-1" dir="ltr"><div class="markdown-prose select-text Markdown_markdown__a19823a0" data-is-typing="false"><p>Je vais créer un site innovant pour une série de biographies. Design immersif avec timeline interactive, animations au scroll, et une esthétique cinématographique.Le site est prêt : <code class="codespan max-w-full cursor-pointer break-words">biographie-site/index.html</code></p>
-<p><strong>Ce que j'ai construit :</strong></p>
-<ul><li><strong>Hero immersif</strong> — titre cinématographique avec animations d'entrée et défilement indicateur</li><li><strong>Grille de 6 biographies</strong> — Einstein, Simone Veil, Lorca, Marilyn Monroe, Gandhi, Frida Kahlo — avec images, dates et taglines. Hover qui révèle la photo en couleur</li><li><strong>Modal détaillée</strong> — clic sur une carte → récit biographique complet en overlay avec backdrop flou</li><li><strong>Spotlight / À la une</strong> — section mise en avant pour Einstein avec call-to-action</li><li><strong>Frise chronologique interactive</strong> — timeline verticale avec animations au scroll (1869→1980)</li><li><strong>Compteurs animés</strong> — statistiques (24 biographies, 6 siècles, 12 pays, 3 nouveautés/mois)</li><li><strong>Citation</strong> — Kierkegaard en typographie serif monumentale</li><li><strong>Newsletter</strong> — formulaire d'inscription</li><li><strong>Effets</strong> — grain film, curseur lumineux qui suit la souris, navigation auto-hide au scroll, révélations progressives</li></ul>
-<p><strong>Design</strong> — palette sombre noir/or, typographie Playfair Display + Inter, esthétique magazine premium.</p>
-<p>Pour le tester : ouvre <code class="codespan max-w-full cursor-pointer break-words">biographie-site/index.html</code> dans un navigateur. Tu veux que j'ajoute des biographies, que je change le style, ou que je le déploie quelque part ?</p></div></div></div></div><div class="group/clip flex h-[24px] items-center space-x-1"><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95 invisible group-hover:visible" data-track-id="msg_copy_btn" data-track-name="msg_copy" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="size-5 text-gray-500 dark:text-gray-500"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"></path><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"></path></svg></button></div></div></div></div><div class="relative flex w-full mx-auto max-w-[50rem]"><div class="group flex min-w-0 flex-1 gap-2 flex-row-reverse"><div class="flex min-w-0 flex-1 flex-col gap-1 items-end"><div class="flex w-full flex-row-reverse" dir="ltr"><div class="flex min-w-0 flex-col gap-2 max-w-[90%] items-end"><div class="relative inline-block whitespace-pre-wrap rounded-lg bg-mimo-bg-message px-3 py-2 leading-normal text-gray-900 dark:text-gray-50 break-words" dir="ltr">ajoute biographie de Mohamed Basta 1926-1995</div></div></div><div class="group/clip flex h-[24px] items-center space-x-1"><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95 invisible group-hover:visible" data-track-id="msg_copy_btn" data-track-name="msg_copy" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="size-5 text-gray-500 dark:text-gray-500"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"></path><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"></path></svg></button></div></div></div></div><div class="mx-auto mb-3 flex w-full max-w-[50rem] flex-col gap-3"><button type="button" class="group flex h-7 items-center gap-1 overflow-hidden rounded-full border-[0.5px] px-3 py-1 transition-colors border-mimo-line-border-card bg-mimo-bg-outlined hover:bg-mimo-fill-neutral-hover max-w-full self-start"><span class="flex shrink-0 items-center transition-colors text-mimo-icon-n3 group-hover:text-mimo-icon-n2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="h-3.5 w-3.5"><path fill="currentColor" d="m6.559 12.4-4.375-2.084a.88.88 0 0 1-.434-.756V4.44a.88.88 0 0 1 .434-.756L6.559 1.6a.88.88 0 0 1 .882 0l4.375 2.085a.87.87 0 0 1 .434.756v5.12a.88.88 0 0 1-.434.756l-4.375 2.085a.88.88 0 0 1-.882 0M7 11.646l4.375-2.085V4.44L7 2.355 2.625 4.44v5.12zm1.963-6.453L6.938 6.645l-2.09-1.456a.437.437 0 1 0-.5.717l2.206 1.538a.4.4 0 0 0-.02.12v2.5l.003.053a.4.4 0 0 0 .405.33c.225 0 .408-.171.408-.383v-2.5l-.003-.053a.4.4 0 0 0-.018-.07l2.144-1.538a.438.438 0 1 0-.51-.71z"></path></svg></span><div class="min-w-0 flex-1 truncate text-xs font-normal leading-5 transition-colors text-mimo-text-h3-placeholder group-hover:text-mimo-text-h1-title">mimo_web_search Mohamed Basta 1926-1995 biography</div></button><button type="button" class="group flex h-7 items-center gap-1 overflow-hidden rounded-full border-[0.5px] px-3 py-1 transition-colors border-mimo-line-border-card bg-mimo-bg-outlined hover:bg-mimo-fill-neutral-hover max-w-full self-start"><span class="flex shrink-0 items-center transition-colors text-mimo-icon-n3 group-hover:text-mimo-icon-n2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="h-3.5 w-3.5"><path fill="currentColor" d="m6.559 12.4-4.375-2.084a.88.88 0 0 1-.434-.756V4.44a.88.88 0 0 1 .434-.756L6.559 1.6a.88.88 0 0 1 .882 0l4.375 2.085a.87.87 0 0 1 .434.756v5.12a.88.88 0 0 1-.434.756l-4.375 2.085a.88.88 0 0 1-.882 0M7 11.646l4.375-2.085V4.44L7 2.355 2.625 4.44v5.12zm1.963-6.453L6.938 6.645l-2.09-1.456a.437.437 0 1 0-.5.717l2.206 1.538a.4.4 0 0 0-.02.12v2.5l.003.053a.4.4 0 0 0 .405.33c.225 0 .408-.171.408-.383v-2.5l-.003-.053a.4.4 0 0 0-.018-.07l2.144-1.538a.438.438 0 1 0-.51-.71z"></path></svg></span><div class="min-w-0 flex-1 truncate text-xs font-normal leading-5 transition-colors text-mimo-text-h3-placeholder group-hover:text-mimo-text-h1-title">web_fetch</div></button><button type="button" class="group flex h-7 items-center gap-1 overflow-hidden rounded-full border-[0.5px] px-3 py-1 transition-colors border-mimo-line-border-card bg-mimo-bg-outlined hover:bg-mimo-fill-neutral-hover max-w-full self-start"><span class="flex shrink-0 items-center transition-colors text-mimo-icon-n3 group-hover:text-mimo-icon-n2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="h-3.5 w-3.5"><path fill="currentColor" d="m6.559 12.4-4.375-2.084a.88.88 0 0 1-.434-.756V4.44a.88.88 0 0 1 .434-.756L6.559 1.6a.88.88 0 0 1 .882 0l4.375 2.085a.87.87 0 0 1 .434.756v5.12a.88.88 0 0 1-.434.756l-4.375 2.085a.88.88 0 0 1-.882 0M7 11.646l4.375-2.085V4.44L7 2.355 2.625 4.44v5.12zm1.963-6.453L6.938 6.645l-2.09-1.456a.437.437 0 1 0-.5.717l2.206 1.538a.4.4 0 0 0-.02.12v2.5l.003.053a.4.4 0 0 0 .405.33c.225 0 .408-.171.408-.383v-2.5l-.003-.053a.4.4 0 0 0-.018-.07l2.144-1.538a.438.438 0 1 0-.51-.71z"></path></svg></span><div class="min-w-0 flex-1 truncate text-xs font-normal leading-5 transition-colors text-mimo-text-h3-placeholder group-hover:text-mimo-text-h1-title">web_fetch</div></button><button type="button" class="group flex h-7 items-center gap-1 overflow-hidden rounded-full border-[0.5px] px-3 py-1 transition-colors border-mimo-line-border-card bg-mimo-bg-outlined hover:bg-mimo-fill-neutral-hover max-w-full self-start"><span class="flex shrink-0 items-center transition-colors text-mimo-icon-n3 group-hover:text-mimo-icon-n2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="h-3.5 w-3.5"><path fill="currentColor" d="m6.559 12.4-4.375-2.084a.88.88 0 0 1-.434-.756V4.44a.88.88 0 0 1 .434-.756L6.559 1.6a.88.88 0 0 1 .882 0l4.375 2.085a.87.87 0 0 1 .434.756v5.12a.88.88 0 0 1-.434.756l-4.375 2.085a.88.88 0 0 1-.882 0M7 11.646l4.375-2.085V4.44L7 2.355 2.625 4.44v5.12zm1.963-6.453L6.938 6.645l-2.09-1.456a.437.437 0 1 0-.5.717l2.206 1.538a.4.4 0 0 0-.02.12v2.5l.003.053a.4.4 0 0 0 .405.33c.225 0 .408-.171.408-.383v-2.5l-.003-.053a.4.4 0 0 0-.018-.07l2.144-1.538a.438.438 0 1 0-.51-.71z"></path></svg></span><div class="min-w-0 flex-1 truncate text-xs font-normal leading-5 transition-colors text-mimo-text-h3-placeholder group-hover:text-mimo-text-h1-title">mimo_web_search Mohamed Basta "Hamid" ESM Alger Casbah militant nationaliste algérien biographie</div></button></div><div class="mx-auto mb-3 flex w-full max-w-[50rem] flex-col gap-3"><button type="button" class="group flex h-7 items-center gap-1 overflow-hidden rounded-full border-[0.5px] px-3 py-1 transition-colors border-mimo-line-border-card bg-mimo-bg-outlined hover:bg-mimo-fill-neutral-hover max-w-full self-start"><span class="flex shrink-0 items-center transition-colors text-mimo-icon-n3 group-hover:text-mimo-icon-n2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="h-3.5 w-3.5"><path fill="currentColor" d="m6.559 12.4-4.375-2.084a.88.88 0 0 1-.434-.756V4.44a.88.88 0 0 1 .434-.756L6.559 1.6a.88.88 0 0 1 .882 0l4.375 2.085a.87.87 0 0 1 .434.756v5.12a.88.88 0 0 1-.434.756l-4.375 2.085a.88.88 0 0 1-.882 0M7 11.646l4.375-2.085V4.44L7 2.355 2.625 4.44v5.12zm1.963-6.453L6.938 6.645l-2.09-1.456a.437.437 0 1 0-.5.717l2.206 1.538a.4.4 0 0 0-.02.12v2.5l.003.053a.4.4 0 0 0 .405.33c.225 0 .408-.171.408-.383v-2.5l-.003-.053a.4.4 0 0 0-.018-.07l2.144-1.538a.438.438 0 1 0-.51-.71z"></path></svg></span><div class="min-w-0 flex-1 truncate text-xs font-normal leading-5 transition-colors text-mimo-text-h3-placeholder group-hover:text-mimo-text-h1-title">edit /root/.openclaw/workspace/biographie-site/index.html</div></button><button type="button" class="group flex h-7 items-center gap-1 overflow-hidden rounded-full border-[0.5px] px-3 py-1 transition-colors border-mimo-line-border-card bg-mimo-bg-outlined hover:bg-mimo-fill-neutral-hover max-w-full self-start"><span class="flex shrink-0 items-center transition-colors text-mimo-icon-n3 group-hover:text-mimo-icon-n2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="h-3.5 w-3.5"><path fill="currentColor" d="m6.559 12.4-4.375-2.084a.88.88 0 0 1-.434-.756V4.44a.88.88 0 0 1 .434-.756L6.559 1.6a.88.88 0 0 1 .882 0l4.375 2.085a.87.87 0 0 1 .434.756v5.12a.88.88 0 0 1-.434.756l-4.375 2.085a.88.88 0 0 1-.882 0M7 11.646l4.375-2.085V4.44L7 2.355 2.625 4.44v5.12zm1.963-6.453L6.938 6.645l-2.09-1.456a.437.437 0 1 0-.5.717l2.206 1.538a.4.4 0 0 0-.02.12v2.5l.003.053a.4.4 0 0 0 .405.33c.225 0 .408-.171.408-.383v-2.5l-.003-.053a.4.4 0 0 0-.018-.07l2.144-1.538a.438.438 0 1 0-.51-.71z"></path></svg></span><div class="min-w-0 flex-1 truncate text-xs font-normal leading-5 transition-colors text-mimo-text-h3-placeholder group-hover:text-mimo-text-h1-title">edit /root/.openclaw/workspace/biographie-site/index.html</div></button><button type="button" class="group flex h-7 items-center gap-1 overflow-hidden rounded-full border-[0.5px] px-3 py-1 transition-colors border-mimo-line-border-card bg-mimo-bg-outlined hover:bg-mimo-fill-neutral-hover max-w-full self-start"><span class="flex shrink-0 items-center transition-colors text-mimo-icon-n3 group-hover:text-mimo-icon-n2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="h-3.5 w-3.5"><path fill="currentColor" d="m6.559 12.4-4.375-2.084a.88.88 0 0 1-.434-.756V4.44a.88.88 0 0 1 .434-.756L6.559 1.6a.88.88 0 0 1 .882 0l4.375 2.085a.87.87 0 0 1 .434.756v5.12a.88.88 0 0 1-.434.756l-4.375 2.085a.88.88 0 0 1-.882 0M7 11.646l4.375-2.085V4.44L7 2.355 2.625 4.44v5.12zm1.963-6.453L6.938 6.645l-2.09-1.456a.437.437 0 1 0-.5.717l2.206 1.538a.4.4 0 0 0-.02.12v2.5l.003.053a.4.4 0 0 0 .405.33c.225 0 .408-.171.408-.383v-2.5l-.003-.053a.4.4 0 0 0-.018-.07l2.144-1.538a.438.438 0 1 0-.51-.71z"></path></svg></span><div class="min-w-0 flex-1 truncate text-xs font-normal leading-5 transition-colors text-mimo-text-h3-placeholder group-hover:text-mimo-text-h1-title">edit /root/.openclaw/workspace/biographie-site/index.html</div></button><button type="button" class="group flex h-7 items-center gap-1 overflow-hidden rounded-full border-[0.5px] px-3 py-1 transition-colors border-mimo-line-border-card bg-mimo-bg-outlined hover:bg-mimo-fill-neutral-hover max-w-full self-start"><span class="flex shrink-0 items-center transition-colors text-mimo-icon-n3 group-hover:text-mimo-icon-n2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="h-3.5 w-3.5"><path fill="currentColor" d="m6.559 12.4-4.375-2.084a.88.88 0 0 1-.434-.756V4.44a.88.88 0 0 1 .434-.756L6.559 1.6a.88.88 0 0 1 .882 0l4.375 2.085a.87.87 0 0 1 .434.756v5.12a.88.88 0 0 1-.434.756l-4.375 2.085a.88.88 0 0 1-.882 0M7 11.646l4.375-2.085V4.44L7 2.355 2.625 4.44v5.12zm1.963-6.453L6.938 6.645l-2.09-1.456a.437.437 0 1 0-.5.717l2.206 1.538a.4.4 0 0 0-.02.12v2.5l.003.053a.4.4 0 0 0 .405.33c.225 0 .408-.171.408-.383v-2.5l-.003-.053a.4.4 0 0 0-.018-.07l2.144-1.538a.438.438 0 1 0-.51-.71z"></path></svg></span><div class="min-w-0 flex-1 truncate text-xs font-normal leading-5 transition-colors text-mimo-text-h3-placeholder group-hover:text-mimo-text-h1-title">edit /root/.openclaw/workspace/biographie-site/index.html</div></button><button type="button" class="group flex h-7 items-center gap-1 overflow-hidden rounded-full border-[0.5px] px-3 py-1 transition-colors border-mimo-line-border-card bg-mimo-bg-outlined hover:bg-mimo-fill-neutral-hover max-w-full self-start"><span class="flex shrink-0 items-center transition-colors text-mimo-icon-n3 group-hover:text-mimo-icon-n2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="h-3.5 w-3.5"><path fill="currentColor" d="m6.559 12.4-4.375-2.084a.88.88 0 0 1-.434-.756V4.44a.88.88 0 0 1 .434-.756L6.559 1.6a.88.88 0 0 1 .882 0l4.375 2.085a.87.87 0 0 1 .434.756v5.12a.88.88 0 0 1-.434.756l-4.375 2.085a.88.88 0 0 1-.882 0M7 11.646l4.375-2.085V4.44L7 2.355 2.625 4.44v5.12zm1.963-6.453L6.938 6.645l-2.09-1.456a.437.437 0 1 0-.5.717l2.206 1.538a.4.4 0 0 0-.02.12v2.5l.003.053a.4.4 0 0 0 .405.33c.225 0 .408-.171.408-.383v-2.5l-.003-.053a.4.4 0 0 0-.018-.07l2.144-1.538a.438.438 0 1 0-.51-.71z"></path></svg></span><div class="min-w-0 flex-1 truncate text-xs font-normal leading-5 transition-colors text-mimo-text-h3-placeholder group-hover:text-mimo-text-h1-title">edit /root/.openclaw/workspace/biographie-site/index.html</div></button></div><div class="relative flex w-full group mb-[16px] select-none mx-auto max-w-[50rem]"><div class="group flex min-w-0 flex-1 gap-2 flex-row"><div class="flex min-w-0 flex-1 flex-col gap-1 items-start"><div class="flex w-full flex-row" dir="ltr"><div class="flex min-w-0 flex-col gap-2 w-full flex-1 items-start"><div class="w-full flex-1" dir="ltr"><div class="markdown-prose select-text Markdown_markdown__a19823a0" data-is-typing="false"><p>J'ai trouvé les infos clés. Mohamed Basta (dit « Hamid ») — né le 25 mai 1926 à la Casbah d'Alger, militant nationaliste, cadre du FLN, cofondateur de l'ESM Alger, ancien footballeur au Red Star Algérois. Je l'ajoute au site.C'est fait. <strong>Mohamed Basta</strong> (1926–195) est maintenant intégré au site :</p>
-<p><strong>Ce qui a été ajouté :</strong></p><ul><li><strong>Carte biographique</strong> dans la grille — 7ème carte avec portrait, dates (1926–1995) et tagline « Militant nationaliste, fondateur de l'ESM Alger »</li><li><strong>Modal détaillée</strong> — récit complet couvrant :
-<ul><li>Sa naissance à la Casbah d'Alger</li><li>Sa carrière de footballeur au Red Star Algérois</li><li>Son rôle de cofondateur de l'Espérance Sportive Musulmane (ESM)</li><li>Son engagement comme cadre supérieur du FLN pendant la guerre de libération</li><li>Son héritage après l'indépendance</li></ul></li><li><strong>Frise chronologique</strong> — deux entrées ajoutées : 1926 (naissance) et 1995 (décès)</li><li><strong>Stats mises à jour</strong> — 25 biographies, 7 siècles, 13 pays</li></ul>
-<blockquote style="color: rgb(139, 139, 139); font-style: normal;"><p>⚠️ L'image utilisée est un placeholder (photo générique d'Unsplash). Si tu as une photo de Mohamed Basta, je peux la remplacer.</p></blockquote>
-<p>Tu veux modifier le texte, ajouter d'autres biographies, ou autre chose ?</p></div></div></div></div><div class="group/clip flex h-[24px] items-center space-x-1"><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95 invisible group-hover:visible" data-track-id="msg_copy_btn" data-track-name="msg_copy" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="size-5 text-gray-500 dark:text-gray-500"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"></path><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"></path></svg></button></div></div></div></div><div class="relative flex w-full mx-auto max-w-[50rem]"><div class="group flex min-w-0 flex-1 gap-2 flex-row-reverse"><div class="flex min-w-0 flex-1 flex-col gap-1 items-end"><div class="flex w-full flex-row-reverse" dir="ltr"><div class="flex min-w-0 flex-col gap-2 max-w-[90%] items-end"><div class="relative inline-block whitespace-pre-wrap rounded-lg bg-mimo-bg-message px-3 py-2 leading-normal text-gray-900 dark:text-gray-50 break-words" dir="ltr">Est-ce qu'on peut ajouter d'autres biographies après ? Maintenant je veux savoir commet faire pour installer ce site sur le disque E: github et cloudflare ?</div></div></div><div class="group/clip flex h-[24px] items-center space-x-1"><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95 invisible group-hover:visible" data-track-id="msg_copy_btn" data-track-name="msg_copy" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="size-5 text-gray-500 dark:text-gray-500"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"></path><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"></path></svg></button></div></div></div></div><div class="relative flex w-full group mb-[16px] select-none mx-auto max-w-[50rem]"><div class="group flex min-w-0 flex-1 gap-2 flex-row"><div class="flex min-w-0 flex-1 flex-col gap-1 items-start"><div class="flex w-full flex-row" dir="ltr"><div class="flex min-w-0 flex-col gap-2 w-full flex-1 items-start"><div class="w-full flex-1" dir="ltr"><div class="markdown-prose select-text Markdown_markdown__a19823a0" data-is-typing="false"><p>Oui, le site est conçu pour ça — il suffit d'ajouter une carte HTML + un objet dans le tableau <code class="codespan max-w-full cursor-pointer break-words">bios</code> en JS à chaque nouvelle biographie. C'est modulaire.</p>
-<p>Pour le déploiement, voici les deux étapes :</p>
-<hr style="margin-top: 20px; margin-bottom: 20px;">
-<h2>1. Pousser sur GitHub</h2>
-<div class="relative my-2 overflow-clip pb-6"><div class="sticky z-[1] bg-mimo-bg-concent-base" style="top: -11px;"><header class="flex items-center justify-between rounded-t-lg border border-b-0 border-gray-300 bg-[#ededed] py-2 pl-4 pr-2 text-sm text-black dark:border-0 dark:bg-[#202123] dark:text-white"><div class="flex items-center gap-2"><span>bash</span></div><div class="flex items-center gap-2"><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5" class="h-4 w-4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"></path></svg></button><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="h-4 w-4"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"></path><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"></path></svg></button></div></header></div><div class="relative -mb-6 rounded-b-lg border border-t-0 border-gray-300 dark:border-0"><pre data-testid="shiki-container" class="relative not-prose overflow-x-auto rounded-b-lg text-sm [&amp;_pre]:rounded-b-lg [&amp;_pre]:p-[1.25rem] [&amp;_pre]:text-sm" id="shiki-container"><span class="languageLabel" id="language-label">bash</span><pre class="shiki one-dark-pro" tabindex="-1" style="background-color: rgb(40, 44, 52); color: rgb(171, 178, 191);"><code><span class="line" data-line="1"><span style="color: rgb(127, 132, 142); font-style: italic;"># Depuis le dossier du site</span></span>
-<span class="line" data-line="2"><span style="color: rgb(86, 182, 194);">cd</span><span style="color: rgb(152, 195, 121);"> ~/.</span><span style="color: rgb(152, 195, 121);"> openclaw/workspace/biographie-site</span></span>
-<span class="line" data-line="3"></span>
-<span class="line" data-line="4"><span style="color: rgb(127, 132, 142); font-style: italic;"># Initialiser le repo git</span></span>
-<span class="line" data-line="5"><span style="color: rgb(97, 175, 239);">git</span><span style="color: rgb(152, 195, 121);"> init</span></span>
-<span class="line" data-line="6"><span style="color: rgb(97, 175, 239);">git</span><span style="color: rgb(152, 195, 121);"> add</span><span style="color: rgb(152, 195, 121);"> .</span></span>
-<span class="line" data-line="7"><span style="color: rgb(97, 175, 239);">git</span><span style="color: rgb(152, 195, 121);"> commit</span><span style="color: rgb(209, 154, 102);"> -m</span><span style="color: rgb(152, 195, 121);"> "Initial commit - site biographies VIES"</span></span>
-<span class="line" data-line="8"></span>
-<span class="line" data-line="9"><span style="color: rgb(127, 132, 142); font-style: italic;"># Créer le repo sur GitHub (avec le CLI gh)</span></span>
-<span class="line" data-line="10"><span style="color: rgb(97, 175, 239);">gh</span><span style="color: rgb(152, 195, 121);"> repo</span><span style="color: rgb(152, 195, 121);"> create</span><span style="color: rgb(152, 195, 121);"> biographie-site</span><span style="color: rgb(209, 154, 102);"> --public</span><span style="color: rgb(209, 154, 102);"> --source=.</span><span style="color: rgb(209, 154, 102);"> --remote=origin</span><span style="color: rgb(209, 154, 102);"> --push</span></span>
-<span class="line" data-line="11"></span></code></pre></pre></div></div>
-<p>Ça crée le repo et pousse le code en une commande.</p>
-<hr style="margin-top: 20px; margin-bottom: 20px;">
-<h2>2. Déployer sur Cloudflare Pages</h2>
-<p><strong>Option A — Dashboard (le plus simple) :</strong></p>
-<ol class="relative"><li style="position: relative; list-style: none;"><span style="position: absolute; left: -20px;">1.</span>Va sur <span class="inline-flex cursor-pointer items-center text-left leading-6 text-blue-600 no-underline focus:outline-none" role="link" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="size-4"><path stroke="none" d="M0 0h24v24H0z"></path><path d="m9 15 6-6M11 6l.463-.536a5 5 0 0 1 7.071 7.072L18 13M13 18l-.397.534a5.07 5.07 0 0 1-7.127 0 4.97 4.97 0 0 1 0-7.071L6 11"></path></svg><span class="ml-1">dash.cloudflare.com</span></span> → <strong>Workers &amp; Pages</strong> → <strong>Create</strong> → <strong>Pages</strong></li><li style="position: relative; list-style: none;"><span style="position: absolute; left: -20px;">2.</span><strong>Connect to Git</strong> → sélectionne ton repo <code class="codespan max-w-full cursor-pointer break-words">biographie-site</code></li><li style="position: relative; list-style: none;"><span style="position: absolute; left: -20px;">3.</span>Configuration :
-<ul><li><strong>Production branch</strong> : <code class="codespan max-w-full cursor-pointer break-words">main</code></li><li><strong>Build command</strong> : <em>(laisser vide — c'est du HTML statique)</em></li><li><strong>Build output directory</strong> : <code class="codespan max-w-full cursor-pointer break-words">/</code> (racine)</li></ul></li><li style="position: relative; list-style: none;"><span style="position: absolute; left: -20px;">4.</span>Clique <strong>Save and Deploy</strong></li><li style="position: relative; list-style: none;"><span style="position: absolute; left: -20px;">5.</span>Ton site est live en ~30 secondes à <code class="codespan max-w-full cursor-pointer break-words">biographie-site.pages.dev</code></li></ol>
-<p><strong>Option B — Via CLI (wrangler) :</strong></p>
-<div class="relative my-2 overflow-clip pb-6"><div class="sticky z-[1] bg-mimo-bg-concent-base" style="top: -11px;"><header class="flex items-center justify-between rounded-t-lg border border-b-0 border-gray-300 bg-[#ededed] py-2 pl-4 pr-2 text-sm text-black dark:border-0 dark:bg-[#202123] dark:text-white"><div class="flex items-center gap-2"><span>bash</span></div><div class="flex items-center gap-2"><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5" class="h-4 w-4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"></path></svg></button><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="h-4 w-4"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"></path><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"></path></svg></button></div></header></div><div class="relative -mb-6 rounded-b-lg border border-t-0 border-gray-300 dark:border-0"><pre data-testid="shiki-container" class="relative not-prose overflow-x-auto rounded-b-lg text-sm [&amp;_pre]:rounded-b-lg [&amp;_pre]:p-[1.25rem] [&amp;_pre]:text-sm" id="shiki-container"><span class="languageLabel" id="language-label">bash</span><pre class="shiki one-dark-pro" tabindex="-1" style="background-color: rgb(40, 44, 52); color: rgb(171, 178, 191);"><code><span class="line" data-line="1"><span style="color: rgb(127, 132, 142); font-style: italic;"># Installer wrangler</span></span>
-<span class="line" data-line="2"><span style="color: rgb(97, 175, 239);">npm</span><span style="color: rgb(152, 195, 121);"> install</span><span style="color: rgb(209, 154, 102);"> -g</span><span style="color: rgb(152, 195, 121);"> wrangler</span></span>
-<span class="line" data-line="3"></span>
-<span class="line" data-line="4"><span style="color: rgb(127, 132, 142); font-style: italic;"># Se connecter à Cloudflare</span></span>
-<span class="line" data-line="5"><span style="color: rgb(97, 175, 239);">wrangler</span><span style="color: rgb(152, 195, 121);"> login</span></span>
-<span class="line" data-line="6"></span>
-<span class="line" data-line="7"><span style="color: rgb(127, 132, 142); font-style: italic;"># Déployer directement</span></span>
-<span class="line" data-line="8"><span style="color: rgb(97, 175, 239);">wrangler</span><span style="color: rgb(152, 195, 121);"> pages</span><span style="color: rgb(152, 195, 121);"> deploy</span><span style="color: rgb(152, 195, 121);"> .</span><span style="color: rgb(209, 154, 102);"> --project-name=biographie-site</span></span>
-<span class="line" data-line="9"></span></code></pre></pre></div></div>
-<hr style="margin-top: 20px; margin-bottom: 20px;">
-<h2>Workflow quotidien après ça</h2>
-<p>Pour ajouter une biographie et mettre en ligne :</p>
-<div class="relative my-2 overflow-clip pb-6"><div class="sticky z-[1] bg-mimo-bg-concent-base" style="top: -11px;"><header class="flex items-center justify-between rounded-t-lg border border-b-0 border-gray-300 bg-[#ededed] py-2 pl-4 pr-2 text-sm text-black dark:border-0 dark:bg-[#202123] dark:text-white"><div class="flex items-center gap-2"><span>bash</span></div><div class="flex items-center gap-2"><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5" class="h-4 w-4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"></path></svg></button><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="h-4 w-4"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"></path><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"></path></svg></button></div></header></div><div class="relative -mb-6 rounded-b-lg border border-t-0 border-gray-300 dark:border-0"><pre data-testid="shiki-container" class="relative not-prose overflow-x-auto rounded-b-lg text-sm [&amp;_pre]:rounded-b-lg [&amp;_pre]:p-[1.25rem] [&amp;_pre]:text-sm" id="shiki-container"><span class="languageLabel" id="language-label">bash</span><pre class="shiki one-dark-pro" tabindex="-1" style="background-color: rgb(40, 44, 52); color: rgb(171, 178, 191);"><code><span class="line" data-line="1"><span style="color: rgb(127, 132, 142); font-style: italic;"># 1. Modifier index.html (ajouter la carte + le JS)</span></span>
-<span class="line" data-line="2"><span style="color: rgb(127, 132, 142); font-style: italic;"># 2. Commit &amp; push</span></span>
-<span class="line" data-line="3"><span style="color: rgb(97, 175, 239);">git</span><span style="color: rgb(152, 195, 121);"> add</span><span style="color: rgb(152, 195, 121);"> .</span></span>
-<span class="line" data-line="4"><span style="color: rgb(97, 175, 239);">git</span><span style="color: rgb(152, 195, 121);"> commit</span><span style="color: rgb(209, 154, 102);"> -m</span><span style="color: rgb(152, 195, 121);"> "Ajout biographie de [Nom]"</span></span>
-<span class="line" data-line="5"><span style="color: rgb(97, 175, 239);">git</span><span style="color: rgb(152, 195, 121);"> push</span></span>
-<span class="line" data-line="6"></span>
-<span class="line" data-line="7"><span style="color: rgb(127, 132, 142); font-style: italic;"># Cloudflare Pages se redéploie automatiquement à chaque push</span></span>
-<span class="line" data-line="8"></span></code></pre></pre></div></div>
-<hr style="margin-top: 20px; margin-bottom: 20px;">
-<p><strong>Résumé :</strong> GitHub = stockage du code. Cloudflare Pages = hébergement gratuit + CDN mondial + déploiement auto à chaque push. Tu veux que je lance les commandes GitHub maintenant ?</p></div></div></div></div><div class="group/clip flex h-[24px] items-center space-x-1"><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95 invisible group-hover:visible" data-track-id="msg_copy_btn" data-track-name="msg_copy" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="size-5 text-gray-500 dark:text-gray-500"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"></path><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"></path></svg></button></div></div></div></div><div class="relative flex w-full mx-auto max-w-[50rem]"><div class="group flex min-w-0 flex-1 gap-2 flex-row-reverse"><div class="flex min-w-0 flex-1 flex-col gap-1 items-end"><div class="flex w-full flex-row-reverse" dir="ltr"><div class="flex min-w-0 flex-col gap-2 max-w-[90%] items-end"><div class="relative inline-block whitespace-pre-wrap rounded-lg bg-mimo-bg-message px-3 py-2 leading-normal text-gray-900 dark:text-gray-50 break-words" dir="ltr">oui d'abord dans le disque E: étape par étape puis dans github : bastaps\ et dasn cloudflare</div></div></div><div class="group/clip flex h-[24px] items-center space-x-1"><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95 invisible group-hover:visible" data-track-id="msg_copy_btn" data-track-name="msg_copy" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="size-5 text-gray-500 dark:text-gray-500"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"></path><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"></path></svg></button></div></div></div></div><div class="mx-auto mb-3 flex w-full max-w-[50rem] flex-col gap-3"><button type="button" class="group flex h-7 items-center gap-1 overflow-hidden rounded-full border-[0.5px] px-3 py-1 transition-colors border-mimo-line-border-card bg-mimo-bg-outlined hover:bg-mimo-fill-neutral-hover max-w-full self-start"><span class="flex shrink-0 items-center transition-colors text-mimo-icon-n3 group-hover:text-mimo-icon-n2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="h-3.5 w-3.5"><path fill="currentColor" d="m6.559 12.4-4.375-2.084a.88.88 0 0 1-.434-.756V4.44a.88.88 0 0 1 .434-.756L6.559 1.6a.88.88 0 0 1 .882 0l4.375 2.085a.87.87 0 0 1 .434.756v5.12a.88.88 0 0 1-.434.756l-4.375 2.085a.88.88 0 0 1-.882 0M7 11.646l4.375-2.085V4.44L7 2.355 2.625 4.44v5.12zm1.963-6.453L6.938 6.645l-2.09-1.456a.437.437 0 1 0-.5.717l2.206 1.538a.4.4 0 0 0-.02.12v2.5l.003.053a.4.4 0 0 0 .405.33c.225 0 .408-.171.408-.383v-2.5l-.003-.053a.4.4 0 0 0-.018-.07l2.144-1.538a.438.438 0 1 0-.51-.71z"></path></svg></span><div class="min-w-0 flex-1 truncate text-xs font-normal leading-5 transition-colors text-mimo-text-h3-placeholder group-hover:text-mimo-text-h1-title">exec lsblk 2&gt;/dev/null || df -h 2&gt;/dev/null; echo "---"; ls /mnt/ 2&gt;/dev/null; echo "---"; uname -a</div></button></div><div class="mx-auto mb-3 flex w-full max-w-[50rem] flex-col gap-3"><button type="button" class="group flex h-7 items-center gap-1 overflow-hidden rounded-full border-[0.5px] px-3 py-1 transition-colors border-mimo-line-border-card bg-mimo-bg-outlined hover:bg-mimo-fill-neutral-hover max-w-full self-start"><span class="flex shrink-0 items-center transition-colors text-mimo-icon-n3 group-hover:text-mimo-icon-n2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="h-3.5 w-3.5"><path fill="currentColor" d="m6.559 12.4-4.375-2.084a.88.88 0 0 1-.434-.756V4.44a.88.88 0 0 1 .434-.756L6.559 1.6a.88.88 0 0 1 .882 0l4.375 2.085a.87.87 0 0 1 .434.756v5.12a.88.88 0 0 1-.434.756l-4.375 2.085a.88.88 0 0 1-.882 0M7 11.646l4.375-2.085V4.44L7 2.355 2.625 4.44v5.12zm1.963-6.453L6.938 6.645l-2.09-1.456a.437.437 0 1 0-.5.717l2.206 1.538a.4.4 0 0 0-.02.12v2.5l.003.053a.4.4 0 0 0 .405.33c.225 0 .408-.171.408-.383v-2.5l-.003-.053a.4.4 0 0 0-.018-.07l2.144-1.538a.438.438 0 1 0-.51-.71z"></path></svg></span><div class="min-w-0 flex-1 truncate text-xs font-normal leading-5 transition-colors text-mimo-text-h3-placeholder group-hover:text-mimo-text-h1-title">exec which gh &amp;&amp; gh auth status 2&gt;&amp;1</div></button><button type="button" class="group flex h-7 items-center gap-1 overflow-hidden rounded-full border-[0.5px] px-3 py-1 transition-colors border-mimo-line-border-card bg-mimo-bg-outlined hover:bg-mimo-fill-neutral-hover max-w-full self-start"><span class="flex shrink-0 items-center transition-colors text-mimo-icon-n3 group-hover:text-mimo-icon-n2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="h-3.5 w-3.5"><path fill="currentColor" d="m6.559 12.4-4.375-2.084a.88.88 0 0 1-.434-.756V4.44a.88.88 0 0 1 .434-.756L6.559 1.6a.88.88 0 0 1 .882 0l4.375 2.085a.87.87 0 0 1 .434.756v5.12a.88.88 0 0 1-.434.756l-4.375 2.085a.88.88 0 0 1-.882 0M7 11.646l4.375-2.085V4.44L7 2.355 2.625 4.44v5.12zm1.963-6.453L6.938 6.645l-2.09-1.456a.437.437 0 1 0-.5.717l2.206 1.538a.4.4 0 0 0-.02.12v2.5l.003.053a.4.4 0 0 0 .405.33c.225 0 .408-.171.408-.383v-2.5l-.003-.053a.4.4 0 0 0-.018-.07l2.144-1.538a.438.438 0 1 0-.51-.71z"></path></svg></span><div class="min-w-0 flex-1 truncate text-xs font-normal leading-5 transition-colors text-mimo-text-h3-placeholder group-hover:text-mimo-text-h1-title">exec which git &amp;&amp; git --version</div></button></div><div class="relative flex w-full group mb-[16px] select-none mx-auto max-w-[50rem]"><div class="group flex min-w-0 flex-1 gap-2 flex-row"><div class="flex min-w-0 flex-1 flex-col gap-1 items-start"><div class="flex w-full flex-row" dir="ltr"><div class="flex min-w-0 flex-col gap-2 w-full flex-1 items-start"><div class="w-full flex-1" dir="ltr"><div class="markdown-prose select-text Markdown_markdown__a19823a0" data-is-typing="false"><p>Je suis sur un serveur Linux — pas de disque E: ici. Mais je peux tout faire directement depuis ce serveur : pousser sur GitHub sous ton compte <code class="codespan max-w-full cursor-pointer break-words">bastaps</code>, puis tu n'auras qu'à connecter Cloudflare.</p>
-<p>On commence par GitHub :<code class="codespan max-w-full cursor-pointer break-words">gh</code> (GitHub CLI) n'est pas installé sur ce serveur. Voici comment procéder — je te donne les commandes exactes à lancer sur <strong>ta machine Windows</strong> (depuis le disque E:) :</p>
-<hr style="margin-top: 20px; margin-bottom: 20px;">
-<h2>Étape 1 — Copier le site sur E:</h2>
-<p>Crée un dossier sur ton disque E: et copie-y le fichier. Le site est un seul fichier <code class="codespan max-w-full cursor-pointer break-words">index.html</code> (~28 KB). Tu peux le récupérer depuis ce serveur ou le créer manuellement.</p>
-<p>Sur ta machine Windows (PowerShell) :</p>
-<div class="relative my-2 overflow-clip pb-6"><div class="sticky z-[1] bg-mimo-bg-concent-base" style="top: -11px;"><header class="flex items-center justify-between rounded-t-lg border border-b-0 border-gray-300 bg-[#ededed] py-2 pl-4 pr-2 text-sm text-black dark:border-0 dark:bg-[#202123] dark:text-white"><div class="flex items-center gap-2"><span>powershell</span></div><div class="flex items-center gap-2"><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5" class="h-4 w-4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"></path></svg></button><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="h-4 w-4"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"></path><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"></path></svg></button></div></header></div><div class="relative -mb-6 rounded-b-lg border border-t-0 border-gray-300 dark:border-0"><pre data-testid="shiki-container" class="relative not-prose overflow-x-auto rounded-b-lg text-sm [&amp;_pre]:rounded-b-lg [&amp;_pre]:p-[1.25rem] [&amp;_pre]:text-sm" id="shiki-container"><span class="languageLabel" id="language-label">powershell</span><pre class="shiki one-dark-pro" tabindex="-1" style="background-color: rgb(40, 44, 52); color: rgb(171, 178, 191);"><code><span class="line" data-line="1"><span style="color: rgb(171, 178, 191);">mkdir E:\biographie</span><span style="color: rgb(86, 182, 194);">-</span><span style="color: rgb(171, 178, 191);">site</span></span>
-<span class="line" data-line="2"><span style="color: rgb(171, 178, 191);">cd E:\biographie</span><span style="color: rgb(86, 182, 194);">-</span><span style="color: rgb(171, 178, 191);">site</span></span>
-<span class="line" data-line="3"></span></code></pre></pre></div></div>
-<p>Puis y coller le fichier <code class="codespan max-w-full cursor-pointer break-words">index.html</code> (je te le mets en pièce jointe ou tu peux le copier depuis le serveur).</p>
-<hr style="margin-top: 20px; margin-bottom: 20px;">
-<h2>Étape 2 — Installer GitHub CLI (une seule fois)</h2>
-<div class="relative my-2 overflow-clip pb-6"><div class="sticky z-[1] bg-mimo-bg-concent-base" style="top: -11px;"><header class="flex items-center justify-between rounded-t-lg border border-b-0 border-gray-300 bg-[#ededed] py-2 pl-4 pr-2 text-sm text-black dark:border-0 dark:bg-[#202123] dark:text-white"><div class="flex items-center gap-2"><span>powershell</span></div><div class="flex items-center gap-2"><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5" class="h-4 w-4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"></path></svg></button><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="h-4 w-4"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"></path><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"></path></svg></button></div></header></div><div class="relative -mb-6 rounded-b-lg border border-t-0 border-gray-300 dark:border-0"><pre data-testid="shiki-container" class="relative not-prose overflow-x-auto rounded-b-lg text-sm [&amp;_pre]:rounded-b-lg [&amp;_pre]:p-[1.25rem] [&amp;_pre]:text-sm" id="shiki-container"><span class="languageLabel" id="language-label">powershell</span><pre class="shiki one-dark-pro" tabindex="-1" style="background-color: rgb(40, 44, 52); color: rgb(171, 178, 191);"><code><span class="line" data-line="1"><span style="color: rgb(171, 178, 191);">winget install GitHub.cli</span></span>
-<span class="line" data-line="2"></span></code></pre></pre></div></div>
-<p>Puis te connecter :</p>
-<div class="relative my-2 overflow-clip pb-6"><div class="sticky z-[1] bg-mimo-bg-concent-base" style="top: -11px;"><header class="flex items-center justify-between rounded-t-lg border border-b-0 border-gray-300 bg-[#ededed] py-2 pl-4 pr-2 text-sm text-black dark:border-0 dark:bg-[#202123] dark:text-white"><div class="flex items-center gap-2"><span>powershell</span></div><div class="flex items-center gap-2"><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5" class="h-4 w-4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"></path></svg></button><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="h-4 w-4"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"></path><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"></path></svg></button></div></header></div><div class="relative -mb-6 rounded-b-lg border border-t-0 border-gray-300 dark:border-0"><pre data-testid="shiki-container" class="relative not-prose overflow-x-auto rounded-b-lg text-sm [&amp;_pre]:rounded-b-lg [&amp;_pre]:p-[1.25rem] [&amp;_pre]:text-sm" id="shiki-container"><span class="languageLabel" id="language-label">powershell</span><pre class="shiki one-dark-pro" tabindex="-1" style="background-color: rgb(40, 44, 52); color: rgb(171, 178, 191);"><code><span class="line" data-line="1"><span style="color: rgb(171, 178, 191);">gh auth login</span></span>
-<span class="line" data-line="2"><span style="color: rgb(86, 182, 194);">``</span></span>
-<span class="line" data-line="3"></span>
-<span class="line" data-line="4"><span style="color: rgb(171, 178, 191);">→ Choisir </span><span style="color: rgb(86, 182, 194);">**GitHub.com**</span><span style="color: rgb(171, 178, 191);"> → </span><span style="color: rgb(86, 182, 194);">**</span><span style="color: rgb(171, 178, 191);">HTTPS</span><span style="color: rgb(86, 182, 194);">**</span><span style="color: rgb(171, 178, 191);"> → </span><span style="color: rgb(86, 182, 194);">**</span><span style="color: rgb(171, 178, 191);">Login with a web browser</span><span style="color: rgb(86, 182, 194);">**</span><span style="color: rgb(171, 178, 191);"> → suivre les instructions.</span></span>
-<span class="line" data-line="5"></span>
-<span class="line" data-line="6"><span style="color: rgb(86, 182, 194);">---</span></span>
-<span class="line" data-line="7"></span>
-<span class="line" data-line="8"><span style="color: rgb(127, 132, 142); font-style: italic;">## Étape 3 — Créer le repo et pousser</span></span>
-<span class="line" data-line="9"></span>
-<span class="line" data-line="10"><span style="color: rgb(86, 182, 194);">``</span><span style="color: rgb(171, 178, 191);">`powershell</span></span>
-<span class="line" data-line="11"><span style="color: rgb(171, 178, 191);">cd E:\biographie</span><span style="color: rgb(86, 182, 194);">-</span><span style="color: rgb(171, 178, 191);">site</span></span>
-<span class="line" data-line="12"></span>
-<span class="line" data-line="13"><span style="color: rgb(171, 178, 191);">git init</span></span>
-<span class="line" data-line="14"><span style="color: rgb(171, 178, 191);">git add .</span></span>
-<span class="line" data-line="15"><span style="color: rgb(171, 178, 191);">git commit </span><span style="color: rgb(86, 182, 194);">-</span><span style="color: rgb(171, 178, 191);">m </span><span style="color: rgb(152, 195, 121);">"Initial commit - site biographies VIES"</span></span>
-<span class="line" data-line="16"></span>
-<span class="line" data-line="17"><span style="color: rgb(171, 178, 191);">gh repo create bastaps</span><span style="color: rgb(86, 182, 194);">/</span><span style="color: rgb(171, 178, 191);">biographie</span><span style="color: rgb(86, 182, 194);">-</span><span style="color: rgb(171, 178, 191);">site </span><span style="color: rgb(86, 182, 194);">--</span><span style="color: rgb(171, 178, 191);">public </span><span style="color: rgb(86, 182, 194);">--</span><span style="color: rgb(171, 178, 191);">source</span><span style="color: rgb(86, 182, 194);">=</span><span style="color: rgb(171, 178, 191);">. </span><span style="color: rgb(86, 182, 194);">--</span><span style="color: rgb(171, 178, 191);">remote</span><span style="color: rgb(86, 182, 194);">=</span><span style="color: rgb(171, 178, 191);">origin </span><span style="color: rgb(86, 182, 194);">--</span><span style="color: rgb(171, 178, 191);">push</span></span>
-<span class="line" data-line="18"></span></code></pre></pre></div></div>
-<p>✅ Le repo sera créé à <code class="codespan max-w-full cursor-pointer break-words">github.com/bastaps/biographie-site</code></p>
-<hr style="margin-top: 20px; margin-bottom: 20px;">
-<h2>Étape 4 — Déployer sur Cloudflare Pages</h2>
-<ol class="relative"><li style="position: relative; list-style: none;"><span style="position: absolute; left: -20px;">1.</span>Va sur <strong><span class="inline-flex cursor-pointer items-center text-left leading-6 text-blue-600 no-underline focus:outline-none" role="link" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="size-4"><path stroke="none" d="M0 0h24v24H0z"></path><path d="m9 15 6-6M11 6l.463-.536a5 5 0 0 1 7.071 7.072L18 13M13 18l-.397.534a5.07 5.07 0 0 1-7.127 0 4.97 4.97 0 0 1 0-7.071L6 11"></path></svg><span class="ml-1">dash.cloudflare.com</span></span></strong></li><li style="position: relative; list-style: none;"><span style="position: absolute; left: -20px;">2.</span><strong>Workers &amp; Pages</strong> → <strong>Create</strong> → <strong>Pages</strong></li><li style="position: relative; list-style: none;"><span style="position: absolute; left: -20px;">3.</span><strong>Connect to Git</strong> → autorise GitHub → sélectione <code class="codespan max-w-full cursor-pointer break-words">bastaps/biographie-site</code></li><li style="position: relative; list-style: none;"><span style="position: absolute; left: -20px;">4.</span>Configuration :
-<ul><li><strong>Production branch</strong> : <code class="codespan max-w-full cursor-pointer break-words">main</code></li><li><strong>Build command</strong> : <em>(vide)</em></li><li><strong>Build output directory</strong> : <code class="codespan max-w-full cursor-pointer break-words">/</code></li></ul></li><li style="position: relative; list-style: none;"><span style="position: absolute; left: -20px;">5.</span><strong>Save and Deploy</strong></li></ol>
-<p>🌐 Ton site sera live à : <strong><code class="codespan max-w-full cursor-pointer break-words">biographie-site.pages.dev</code></strong></p>
-<hr style="margin-top: 20px; margin-bottom: 20px;">
-<h2>Ensuite, pour chaque nouvelle biographie</h2>
-<div class="relative my-2 overflow-clip pb-6"><div class="sticky z-[1] bg-mimo-bg-concent-base" style="top: -11px;"><header class="flex items-center justify-between rounded-t-lg border border-b-0 border-gray-300 bg-[#ededed] py-2 pl-4 pr-2 text-sm text-black dark:border-0 dark:bg-[#202123] dark:text-white"><div class="flex items-center gap-2"><span>powershell</span></div><div class="flex items-center gap-2"><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5" class="h-4 w-4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"></path></svg></button><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="h-4 w-4"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"></path><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"></path></svg></button></div></header></div><div class="relative -mb-6 rounded-b-lg border border-t-0 border-gray-300 dark:border-0"><pre data-testid="shiki-container" class="relative not-prose overflow-x-auto rounded-b-lg text-sm [&amp;_pre]:rounded-b-lg [&amp;_pre]:p-[1.25rem] [&amp;_pre]:text-sm" id="shiki-container"><span class="languageLabel" id="language-label">powershell</span><pre class="shiki one-dark-pro" tabindex="-1" style="background-color: rgb(40, 44, 52); color: rgb(171, 178, 191);"><code><span class="line" data-line="1"><span style="color: rgb(127, 132, 142); font-style: italic;"># Modifier index.html, puis :</span></span>
-<span class="line" data-line="2"><span style="color: rgb(171, 178, 191);">git add .</span></span>
-<span class="line" data-line="3"><span style="color: rgb(171, 178, 191);">git commit </span><span style="color: rgb(86, 182, 194);">-</span><span style="color: rgb(171, 178, 191);">m </span><span style="color: rgb(152, 195, 121);">"Ajout biographie de [Nom]"</span></span>
-<span class="line" data-line="4"><span style="color: rgb(171, 178, 191);">git push</span></span>
-<span class="line" data-line="5"><span style="color: rgb(127, 132, 142); font-style: italic;"># Cloudflare se redéploie automatiquement</span></span>
-<span class="line" data-line="6"><span style="color: rgb(86, 182, 194);">``</span></span>
-<span class="line" data-line="7"></span>
-<span class="line" data-line="8"><span style="color: rgb(86, 182, 194);">---</span></span>
-<span class="line" data-line="9"></span>
-<span class="line" data-line="10"><span style="color: rgb(171, 178, 191);">Tu veux que je t</span><span style="color: rgb(152, 195, 121);">'envoie le fichier `index.html` complet pour que tu le metes sur E: ? Ou tu préfères que je t'</span><span style="color: rgb(171, 178, 191);">affiche son contenu </span><span style="color: rgb(198, 120, 221);">?</span></span>
-<span class="line" data-line="11"></span></code></pre></pre></div></div></div></div></div></div><div class="group/clip flex h-[24px] items-center space-x-1"><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer w-7 h-7 rounded-md bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95" data-track-id="msg_copy_btn" data-track-name="msg_copy" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="size-5 text-gray-500 dark:text-gray-500"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"></path><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"></path></svg></button></div></div></div></div></div><button type="button" class="inline-flex justify-center items-center outline-none select-none cursor-pointer w-8 h-8 rounded-full border border-black/10 dark:border-none disabled:opacity-40 disabled:cursor-not-allowed active:border-black/20 transform-gpu active:scale-95 absolute bottom-4 left-1/2 z-10 -translate-x-1/2 bg-white text-gray-700 shadow hover:bg-white hover:shadow-lg dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-800 active:bg-white active:shadow-lg dark:active:bg-gray-800 transition-[transform,opacity] duration-200 ease-in-out pointer-events-auto scale-100 opacity-100"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="h-5 w-5" alt="Scroll to bottom"><path stroke="none" d="M0 0h24v24H0z"></path><path d="m6 9 6 6 6-6"></path></svg></button></div><div class="relative px-4"><div class="dark:from-mimo-bg-concent-base/0 pointer-events-none absolute left-0 top-0 z-0 h-6 w-full -translate-y-full bg-gradient-to-b from-white/0 to-white dark:to-mimo-bg-concent-base"></div><div class="relative mx-auto w-full max-w-[50rem]"><div class="relative rounded-xl border border-gray-200 transition-none dark:border-transparent dark:bg-mimo-bg-card bg-mimo-bg-outlined" style="box-shadow: rgba(65, 77, 96, 0.06) 0px 4px 10px 0px;"><div class="p-4 pb-2.5"><div class="flex gap-2 items-end"><textarea placeholder="Ask me anything! Hold Shift+Enter to start a new line." rows="1" class="relative mb-1 max-h-[160px] min-h-[32px] w-full resize-none overflow-y-auto bg-transparent text-gray-900 placeholder-gray-400 placeholder:font-light focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:text-gray-50 dark:placeholder-gray-500 retina:placeholder:font-normal text-sm" style="height: 32px;"></textarea></div><div class="relative flex w-full items-end justify-between"><div class="hide-scrollbar flex min-w-0 items-center overflow-x-auto pr-3" style="mask-image: linear-gradient(270deg, transparent 0%, rgb(0, 0, 0) 16px);"><div class="flex items-center gap-2 whitespace-nowrap"></div></div><div class="flex flex-shrink-0 items-center gap-3"><div class="flex items-center gap-2"><input accept="" multiple="" type="file" style="display: none;"><div class="flex items-center justify-center" aria-disabled="false"><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer bg-transparent text-black dark:text-white border border-transparent disabled:opacity-40 disabled:cursor-not-allowed md:hover:bg-black/5 md:dark:hover:bg-white/10 md:hover:border active:bg-black/10 dark:active:bg-black/15 transform-gpu scale-100 transition-transform duration-75 active:scale-95 h-7 w-7 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" class="size-4"><path fill="currentColor" d="M8 1.333A.667.667 0 0 0 7.333 2v5.333H2a.667.667 0 0 0 0 1.334h5.333V14a.667.667 0 1 0 1.334 0V8.667H14a.667.667 0 1 0 0-1.334H8.667V2A.667.667 0 0 0 8 1.333"></path></svg></button></div><button type="button" class="inline-flex relative justify-center items-center outline-none select-none cursor-pointer rounded-full bg-black/90 dark:bg-white/90 text-white dark:text-black border border-transparent disabled:opacity-40 disabled:cursor-not-allowed h-7 w-7" data-track-id="claw_send_btn" data-track-name="claw_send_message" data-state="closed" disabled=""><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 19 16" class="size-[0.875rem]"><path fill="currentColor" d="M.244 7.921 18.202.03c.254-.111.528.115.452.373L14.51 14.345a.33.33 0 0 1-.448.201l-4.337-1.852a.333.333 0 0 0-.44.178l-1.14 2.923c-.117.298-.565.262-.63-.049l-.851-4.089a.31.31 0 0 1 .09-.285l6.707-6.448c.061-.059-.025-.15-.092-.098L5.396 10.25a.99.99 0 0 1-.92.099L.244 8.65a.395.395 0 0 1 0-.73"></path></svg></button></div></div></div></div></div><div class="py-3"><div class="flex select-none items-center justify-center text-[0.6875rem] leading-[0.75rem] text-gray-400 dark:text-gray-500">Developer demo platform for model showcases. Not a formal AI assistant. AI-generated content only.</div></div></div></div></div></div><div class="relative z-[49] flex-shrink-0 bg-gray-50 dark:bg-mimo-bg-body transition-[width,transform] duration-300 ease-in-out" style="width: 683px;"><div class="flex h-full flex-col transition-transform duration-300 ease-in-out translate-x-0" style="width: 683px;"><div class="box-border h-full w-full pl-1.5"><div class="flex h-full w-full flex-col overflow-hidden rounded-r-lg bg-mimo-bg-concent-base"><nav class="relative flex items-center bg-mimo-bg-concent-base p-3 rounded-tr-lg"><div class="flex min-w-0 flex-1 flex-shrink-0 items-center"><div class="flex items-center overflow-hidden transition-[transform,opacity,margin,max-width] duration-300 ease-in-out mr-2 max-w-full translate-x-0 scale-100 opacity-100" style="min-width: 0px;"><div class="hide-scrollbar overflow-x-auto flex-1 min-w-0" style="mask-image: linear-gradient(270deg, transparent 0%, rgb(0, 0, 0) 16px);"><div role="tablist" class="flex items-center gap-3 whitespace-nowrap pr-4"><div role="tab" tabindex="0" aria-selected="false" class="flex cursor-pointer select-none items-center gap-1 rounded-md px-2 py-3px text-sm leading-[22px] transition-colors text-mimo-text-h3-placeholder hover:text-mimo-text-h1-title"><span class="relative"><span aria-hidden="true" class="invisible select-none whitespace-nowrap font-medium">Progress</span><span class="absolute inset-0 whitespace-nowrap font-normal">Progress</span></span></div><div role="tab" tabindex="0" aria-selected="true" class="flex cursor-pointer select-none items-center gap-1 rounded-md px-2 py-3px text-sm leading-[22px] transition-colors bg-mimo-fill-neutral-active text-mimo-text-h1-title"><span class="relative"><span aria-hidden="true" class="invisible select-none whitespace-nowrap font-medium">Files</span><span class="absolute inset-0 whitespace-nowrap font-medium">Files</span></span></div></div></div></div><div class="flex items-center"></div></div><div class="flex min-w-0 items-center justify-end"><div class="flex items-center gap-2"><button type="button" class="flex h-8 w-8 items-center justify-center rounded-[0.375rem] text-mimo-icon-n2 transition-colors hover:bg-mimo-fill-neutral-hover" aria-label="Download" data-track-id="claw_sidepanel_download_btn" data-track-name="claw_sidepanel_download" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5" class="h-[1.125rem] w-[1.125rem] text-mimo-icon-n2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"></path></svg></button><button type="button" class="flex h-8 w-8 items-center justify-center rounded-[0.375rem] text-mimo-icon-n2 transition-colors hover:bg-mimo-fill-neutral-hover" aria-label="Fullscreen" data-track-id="claw_sidepanel_fullscreen_btn" data-track-name="claw_sidepanel_fullscreen" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="h-[1.125rem] w-[1.125rem] text-mimo-icon-n2"><path fill="currentColor" d="M4.32 2.4c-1.06 0-1.92.86-1.92 1.92V7.2a.96.96 0 1 0 1.92 0V4.32H7.2a.96.96 0 1 0 0-1.92zM21.6 4.32V7.2a.96.96 0 1 1-1.92 0V4.32H16.8a.96.96 0 1 1 0-1.92h2.88c1.06 0 1.92.86 1.92 1.92M16.8 21.6h2.88c1.06 0 1.92-.86 1.92-1.92V16.8a.96.96 0 1 0-1.92 0v2.88H16.8a.96.96 0 1 0 0 1.92M2.4 19.68V16.8a.96.96 0 1 1 1.92 0v2.88H7.2a.96.96 0 1 1 0 1.92H4.32a1.92 1.92 0 0 1-1.92-1.92"></path></svg></button><button type="button" class="flex h-8 w-8 items-center justify-center rounded-[0.375rem] text-mimo-icon-n2 transition-colors hover:bg-mimo-fill-neutral-hover" aria-label="Close" data-track-id="claw_sidepanel_close_btn" data-track-name="claw_sidepanel_close" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" class="h-[1.125rem] w-[1.125rem] text-mimo-icon-n2"><path fill="currentColor" d="M16.88 16.88a.83.83 0 0 0 .003-1.176L11.179 10l5.704-5.704a.83.83 0 0 0-.003-1.176.83.83 0 0 0-1.176-.002L10 8.822 4.296 3.118a.83.83 0 0 0-1.176.002.83.83 0 0 0-.002 1.176L8.822 10l-5.704 5.704a.83.83 0 0 0 .002 1.177.83.83 0 0 0 1.176.002L10 11.179l5.704 5.704a.83.83 0 0 0 1.176-.002"></path></svg></button></div></div></nav><div class="flex min-h-0 flex-1 overflow-hidden border-t border-[rgba(31,35,41,0.15)] dark:border-[rgba(255,255,255,0.12)]"><div class="flex h-full w-full overflow-hidden"><div role="tree" class="flex flex-col overflow-hidden w-[13.75rem] shrink-0 border-r border-[rgba(31,35,41,0.15)] dark:border-[rgba(255,255,255,0.12)] h-full"><div class="shrink-0"><div class="flex shrink-0 items-center justify-between px-3 pb-[0.375rem] pt-3"><span class="text-sm font-medium leading-[1.375rem] text-mimo-text-h1-title">文件</span><button type="button" aria-label="刷新" class="flex h-4 w-4 shrink-0 cursor-pointer items-center justify-center text-mimo-icon-n2 hover:text-mimo-icon-n1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" class="h-4 w-4"><path fill="currentColor" d="M6.62 2.848a5.33 5.33 0 0 1 5.788 2.15h-2.073a.667.667 0 0 0 0 1.333h3.664a.667.667 0 0 0 .668-.666V2a.667.667 0 0 0-1.334 0v2a6.667 6.667 0 1 0 .44 7.333.667.667 0 1 0-1.154-.667 5.333 5.333 0 1 1-6-7.818"></path></svg></button></div></div><div class="hover-scrollbar min-h-0 flex-1 overflow-y-auto pb-2"><div><div class="px-2 py-px"><div role="treeitem" tabindex="0" aria-expanded="false" aria-selected="false" class="flex h-[1.875rem] w-full cursor-pointer select-none items-center rounded transition-colors hover:bg-mimo-fill-neutral-hover" style="padding-left: 4px; padding-right: 4px;"><div class="flex h-3.5 w-3.5 shrink-0 items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" class="h-4 w-4 text-mimo-icon-n3 transition-transform duration-150"><path fill="currentColor" fill-rule="evenodd" d="m10.186 7.653-3.85-3.548a.382.382 0 0 0-.575.057.5.5 0 0 0-.094.29v7.097c0 .249.182.451.408.451a.39.39 0 0 0 .26-.105l3.851-3.548a.485.485 0 0 0 0-.694" clip-rule="evenodd"></path></svg></div><span class="ml-0.5 min-w-0 flex-1 text-sm text-mimo-text-h1-title"><div class="min-w-0 max-w-full text-sm text-mimo-text-h1-title" data-state="closed"><span class="block max-w-full break-words text-inherit truncate">.openclaw</span></div></span></div></div></div><div><div class="px-2 py-px"><div role="treeitem" tabindex="0" aria-expanded="true" aria-selected="false" class="flex h-[1.875rem] w-full cursor-pointer select-none items-center rounded transition-colors hover:bg-mimo-fill-neutral-hover" style="padding-left: 4px; padding-right: 4px;"><div class="flex h-3.5 w-3.5 shrink-0 items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" class="h-4 w-4 text-mimo-icon-n3 transition-transform duration-150 rotate-90"><path fill="currentColor" fill-rule="evenodd" d="m10.186 7.653-3.85-3.548a.382.382 0 0 0-.575.057.5.5 0 0 0-.094.29v7.097c0 .249.182.451.408.451a.39.39 0 0 0 .26-.105l3.851-3.548a.485.485 0 0 0 0-.694" clip-rule="evenodd"></path></svg></div><span class="ml-0.5 min-w-0 flex-1 text-sm text-mimo-text-h1-title"><div class="min-w-0 max-w-full text-sm text-mimo-text-h1-title" data-state="closed"><span class="block max-w-full break-words text-inherit truncate">biographie-site</span></div></span></div></div><div role="group"><div><div class="px-2 py-px"><div role="treeitem" tabindex="0" aria-selected="true" class="flex h-[1.875rem] w-full cursor-pointer select-none items-center rounded transition-colors bg-mimo-fill-neutral-active" style="padding-left: 12px; padding-right: 4px;"><div class="flex h-3.5 w-3.5 shrink-0 items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="m-px h-3.5 w-3.5 text-mimo-icon-n3"><path fill="currentColor" d="M7.543.604a.6.6 0 0 1 .18.073 1 1 0 0 1 .142.113.5.5 0 0 1 .234.225l3.708 3.626c.102.048.184.13.232.23.062.064.09.1.116.14a.6.6 0 0 1 .074.176c.015.063.021.12.021.286v6.298c0 .572-.061.78-.175.988q-.173.317-.496.486c-.214.112-.427.171-1.01.171H3.432c-.586 0-.798-.06-1.011-.171a1.2 1.2 0 0 1-.497-.485c-.114-.21-.175-.417-.175-.988V2.228c0-.572.061-.78.175-.988q.173-.316.496-.486c.214-.111.427-.171 1.01-.171H7.25c.17 0 .228.006.293.02zm-.379.942h-3.73c-.385 0-.467.016-.547.058a.2.2 0 0 0-.093.09c-.04.072-.056.144-.059.44v9.733c.003.295.02.367.059.439q.031.06.092.09c.081.042.163.058.547.058h7.135c.384 0 .465-.016.546-.058a.2.2 0 0 0 .093-.09c.043-.08.059-.159.059-.535V5.556h-3.61a.5.5 0 0 1-.347-.14.48.48 0 0 1-.145-.34zm.985.88v2.168h2.216z"></path><path fill="currentColor" d="M7 6.417a.583.583 0 0 1 0 1.167H4.667a.583.583 0 1 1 0-1.167zM9.333 8.75a.583.583 0 1 1 0 1.167H4.667a.583.583 0 1 1 0-1.167z"></path></svg></div><span class="ml-0.5 min-w-0 flex-1 text-sm text-mimo-text-h1-title"><div class="min-w-0 max-w-full text-sm text-mimo-text-h1-title" data-state="closed"><span class="block max-w-full break-words text-inherit truncate">index.html</span></div></span></div></div></div></div></div><div><div class="px-2 py-px"><div role="treeitem" tabindex="0" aria-selected="false" class="flex h-[1.875rem] w-full cursor-pointer select-none items-center rounded transition-colors hover:bg-mimo-fill-neutral-hover" style="padding-left: 4px; padding-right: 4px;"><div class="flex h-3.5 w-3.5 shrink-0 items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="m-px h-3.5 w-3.5 text-mimo-icon-n3"><path fill="currentColor" d="M7.543.604a.6.6 0 0 1 .18.073 1 1 0 0 1 .142.113.5.5 0 0 1 .234.225l3.708 3.626c.102.048.184.13.232.23.062.064.09.1.116.14a.6.6 0 0 1 .074.176c.015.063.021.12.021.286v6.298c0 .572-.061.78-.175.988q-.173.317-.496.486c-.214.112-.427.171-1.01.171H3.432c-.586 0-.798-.06-1.011-.171a1.2 1.2 0 0 1-.497-.485c-.114-.21-.175-.417-.175-.988V2.228c0-.572.061-.78.175-.988q.173-.316.496-.486c.214-.111.427-.171 1.01-.171H7.25c.17 0 .228.006.293.02zm-.379.942h-3.73c-.385 0-.467.016-.547.058a.2.2 0 0 0-.093.09c-.04.072-.056.144-.059.44v9.733c.003.295.02.367.059.439q.031.06.092.09c.081.042.163.058.547.058h7.135c.384 0 .465-.016.546-.058a.2.2 0 0 0 .093-.09c.043-.08.059-.159.059-.535V5.556h-3.61a.5.5 0 0 1-.347-.14.48.48 0 0 1-.145-.34zm.985.88v2.168h2.216z"></path><path fill="currentColor" d="M7 6.417a.583.583 0 0 1 0 1.167H4.667a.583.583 0 1 1 0-1.167zM9.333 8.75a.583.583 0 1 1 0 1.167H4.667a.583.583 0 1 1 0-1.167z"></path></svg></div><span class="ml-0.5 min-w-0 flex-1 text-sm text-mimo-text-h1-title"><div class="min-w-0 max-w-full text-sm text-mimo-text-h1-title" data-state="closed"><span class="block max-w-full break-words text-inherit truncate">AGENTS.md</span></div></span></div></div></div><div><div class="px-2 py-px"><div role="treeitem" tabindex="0" aria-selected="false" class="flex h-[1.875rem] w-full cursor-pointer select-none items-center rounded transition-colors hover:bg-mimo-fill-neutral-hover" style="padding-left: 4px; padding-right: 4px;"><div class="flex h-3.5 w-3.5 shrink-0 items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="m-px h-3.5 w-3.5 text-mimo-icon-n3"><path fill="currentColor" d="M7.543.604a.6.6 0 0 1 .18.073 1 1 0 0 1 .142.113.5.5 0 0 1 .234.225l3.708 3.626c.102.048.184.13.232.23.062.064.09.1.116.14a.6.6 0 0 1 .074.176c.015.063.021.12.021.286v6.298c0 .572-.061.78-.175.988q-.173.317-.496.486c-.214.112-.427.171-1.01.171H3.432c-.586 0-.798-.06-1.011-.171a1.2 1.2 0 0 1-.497-.485c-.114-.21-.175-.417-.175-.988V2.228c0-.572.061-.78.175-.988q.173-.316.496-.486c.214-.111.427-.171 1.01-.171H7.25c.17 0 .228.006.293.02zm-.379.942h-3.73c-.385 0-.467.016-.547.058a.2.2 0 0 0-.093.09c-.04.072-.056.144-.059.44v9.733c.003.295.02.367.059.439q.031.06.092.09c.081.042.163.058.547.058h7.135c.384 0 .465-.016.546-.058a.2.2 0 0 0 .093-.09c.043-.08.059-.159.059-.535V5.556h-3.61a.5.5 0 0 1-.347-.14.48.48 0 0 1-.145-.34zm.985.88v2.168h2.216z"></path><path fill="currentColor" d="M7 6.417a.583.583 0 0 1 0 1.167H4.667a.583.583 0 1 1 0-1.167zM9.333 8.75a.583.583 0 1 1 0 1.167H4.667a.583.583 0 1 1 0-1.167z"></path></svg></div><span class="ml-0.5 min-w-0 flex-1 text-sm text-mimo-text-h1-title"><div class="min-w-0 max-w-full text-sm text-mimo-text-h1-title" data-state="closed"><span class="block max-w-full break-words text-inherit truncate">BOOTSTRAP.md</span></div></span></div></div></div><div><div class="px-2 py-px"><div role="treeitem" tabindex="0" aria-selected="false" class="flex h-[1.875rem] w-full cursor-pointer select-none items-center rounded transition-colors hover:bg-mimo-fill-neutral-hover" style="padding-left: 4px; padding-right: 4px;"><div class="flex h-3.5 w-3.5 shrink-0 items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="m-px h-3.5 w-3.5 text-mimo-icon-n3"><path fill="currentColor" d="M7.543.604a.6.6 0 0 1 .18.073 1 1 0 0 1 .142.113.5.5 0 0 1 .234.225l3.708 3.626c.102.048.184.13.232.23.062.064.09.1.116.14a.6.6 0 0 1 .074.176c.015.063.021.12.021.286v6.298c0 .572-.061.78-.175.988q-.173.317-.496.486c-.214.112-.427.171-1.01.171H3.432c-.586 0-.798-.06-1.011-.171a1.2 1.2 0 0 1-.497-.485c-.114-.21-.175-.417-.175-.988V2.228c0-.572.061-.78.175-.988q.173-.316.496-.486c.214-.111.427-.171 1.01-.171H7.25c.17 0 .228.006.293.02zm-.379.942h-3.73c-.385 0-.467.016-.547.058a.2.2 0 0 0-.093.09c-.04.072-.056.144-.059.44v9.733c.003.295.02.367.059.439q.031.06.092.09c.081.042.163.058.547.058h7.135c.384 0 .465-.016.546-.058a.2.2 0 0 0 .093-.09c.043-.08.059-.159.059-.535V5.556h-3.61a.5.5 0 0 1-.347-.14.48.48 0 0 1-.145-.34zm.985.88v2.168h2.216z"></path><path fill="currentColor" d="M7 6.417a.583.583 0 0 1 0 1.167H4.667a.583.583 0 1 1 0-1.167zM9.333 8.75a.583.583 0 1 1 0 1.167H4.667a.583.583 0 1 1 0-1.167z"></path></svg></div><span class="ml-0.5 min-w-0 flex-1 text-sm text-mimo-text-h1-title"><div class="min-w-0 max-w-full text-sm text-mimo-text-h1-title" data-state="closed"><span class="block max-w-full break-words text-inherit truncate">HEARTBEAT.md</span></div></span></div></div></div><div><div class="px-2 py-px"><div role="treeitem" tabindex="0" aria-selected="false" class="flex h-[1.875rem] w-full cursor-pointer select-none items-center rounded transition-colors hover:bg-mimo-fill-neutral-hover" style="padding-left: 4px; padding-right: 4px;"><div class="flex h-3.5 w-3.5 shrink-0 items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="m-px h-3.5 w-3.5 text-mimo-icon-n3"><path fill="currentColor" d="M7.543.604a.6.6 0 0 1 .18.073 1 1 0 0 1 .142.113.5.5 0 0 1 .234.225l3.708 3.626c.102.048.184.13.232.23.062.064.09.1.116.14a.6.6 0 0 1 .074.176c.015.063.021.12.021.286v6.298c0 .572-.061.78-.175.988q-.173.317-.496.486c-.214.112-.427.171-1.01.171H3.432c-.586 0-.798-.06-1.011-.171a1.2 1.2 0 0 1-.497-.485c-.114-.21-.175-.417-.175-.988V2.228c0-.572.061-.78.175-.988q.173-.316.496-.486c.214-.111.427-.171 1.01-.171H7.25c.17 0 .228.006.293.02zm-.379.942h-3.73c-.385 0-.467.016-.547.058a.2.2 0 0 0-.093.09c-.04.072-.056.144-.059.44v9.733c.003.295.02.367.059.439q.031.06.092.09c.081.042.163.058.547.058h7.135c.384 0 .465-.016.546-.058a.2.2 0 0 0 .093-.09c.043-.08.059-.159.059-.535V5.556h-3.61a.5.5 0 0 1-.347-.14.48.48 0 0 1-.145-.34zm.985.88v2.168h2.216z"></path><path fill="currentColor" d="M7 6.417a.583.583 0 0 1 0 1.167H4.667a.583.583 0 1 1 0-1.167zM9.333 8.75a.583.583 0 1 1 0 1.167H4.667a.583.583 0 1 1 0-1.167z"></path></svg></div><span class="ml-0.5 min-w-0 flex-1 text-sm text-mimo-text-h1-title"><div class="min-w-0 max-w-full text-sm text-mimo-text-h1-title" data-state="closed"><span class="block max-w-full break-words text-inherit truncate">IDENTITY.md</span></div></span></div></div></div><div><div class="px-2 py-px"><div role="treeitem" tabindex="0" aria-selected="false" class="flex h-[1.875rem] w-full cursor-pointer select-none items-center rounded transition-colors hover:bg-mimo-fill-neutral-hover" style="padding-left: 4px; padding-right: 4px;"><div class="flex h-3.5 w-3.5 shrink-0 items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="m-px h-3.5 w-3.5 text-mimo-icon-n3"><path fill="currentColor" d="M7.543.604a.6.6 0 0 1 .18.073 1 1 0 0 1 .142.113.5.5 0 0 1 .234.225l3.708 3.626c.102.048.184.13.232.23.062.064.09.1.116.14a.6.6 0 0 1 .074.176c.015.063.021.12.021.286v6.298c0 .572-.061.78-.175.988q-.173.317-.496.486c-.214.112-.427.171-1.01.171H3.432c-.586 0-.798-.06-1.011-.171a1.2 1.2 0 0 1-.497-.485c-.114-.21-.175-.417-.175-.988V2.228c0-.572.061-.78.175-.988q.173-.316.496-.486c.214-.111.427-.171 1.01-.171H7.25c.17 0 .228.006.293.02zm-.379.942h-3.73c-.385 0-.467.016-.547.058a.2.2 0 0 0-.093.09c-.04.072-.056.144-.059.44v9.733c.003.295.02.367.059.439q.031.06.092.09c.081.042.163.058.547.058h7.135c.384 0 .465-.016.546-.058a.2.2 0 0 0 .093-.09c.043-.08.059-.159.059-.535V5.556h-3.61a.5.5 0 0 1-.347-.14.48.48 0 0 1-.145-.34zm.985.88v2.168h2.216z"></path><path fill="currentColor" d="M7 6.417a.583.583 0 0 1 0 1.167H4.667a.583.583 0 1 1 0-1.167zM9.333 8.75a.583.583 0 1 1 0 1.167H4.667a.583.583 0 1 1 0-1.167z"></path></svg></div><span class="ml-0.5 min-w-0 flex-1 text-sm text-mimo-text-h1-title"><div class="min-w-0 max-w-full text-sm text-mimo-text-h1-title" data-state="closed"><span class="block max-w-full break-words text-inherit truncate">TOOLS.md</span></div></span></div></div></div><div><div class="px-2 py-px"><div role="treeitem" tabindex="0" aria-selected="false" class="flex h-[1.875rem] w-full cursor-pointer select-none items-center rounded transition-colors hover:bg-mimo-fill-neutral-hover" style="padding-left: 4px; padding-right: 4px;"><div class="flex h-3.5 w-3.5 shrink-0 items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="m-px h-3.5 w-3.5 text-mimo-icon-n3"><path fill="currentColor" d="M7.543.604a.6.6 0 0 1 .18.073 1 1 0 0 1 .142.113.5.5 0 0 1 .234.225l3.708 3.626c.102.048.184.13.232.23.062.064.09.1.116.14a.6.6 0 0 1 .074.176c.015.063.021.12.021.286v6.298c0 .572-.061.78-.175.988q-.173.317-.496.486c-.214.112-.427.171-1.01.171H3.432c-.586 0-.798-.06-1.011-.171a1.2 1.2 0 0 1-.497-.485c-.114-.21-.175-.417-.175-.988V2.228c0-.572.061-.78.175-.988q.173-.316.496-.486c.214-.111.427-.171 1.01-.171H7.25c.17 0 .228.006.293.02zm-.379.942h-3.73c-.385 0-.467.016-.547.058a.2.2 0 0 0-.093.09c-.04.072-.056.144-.059.44v9.733c.003.295.02.367.059.439q.031.06.092.09c.081.042.163.058.547.058h7.135c.384 0 .465-.016.546-.058a.2.2 0 0 0 .093-.09c.043-.08.059-.159.059-.535V5.556h-3.61a.5.5 0 0 1-.347-.14.48.48 0 0 1-.145-.34zm.985.88v2.168h2.216z"></path><path fill="currentColor" d="M7 6.417a.583.583 0 0 1 0 1.167H4.667a.583.583 0 1 1 0-1.167zM9.333 8.75a.583.583 0 1 1 0 1.167H4.667a.583.583 0 1 1 0-1.167z"></path></svg></div><span class="ml-0.5 min-w-0 flex-1 text-sm text-mimo-text-h1-title"><div class="min-w-0 max-w-full text-sm text-mimo-text-h1-title" data-state="closed"><span class="block max-w-full break-words text-inherit truncate">USER.md</span></div></span></div></div></div></div></div><div class="relative flex flex-col overflow-hidden flex-1"><div class="flex min-h-0 flex-1 flex-col"><div class="flex shrink-0 justify-end border-b border-[rgba(31,35,41,0.15)] px-4 py-3 dark:border-[rgba(255,255,255,0.12)]"><div class="relative inline-flex rounded-lg bg-gray-100 p-0.5 dark:bg-gray-800 text-xs" role="tablist"><div class="absolute bottom-0.5 top-0.5 rounded-md bg-white shadow-sm dark:bg-gray-700 transition-all duration-300 ease-in-out" style="left: 61px; width: 76px;"></div><button type="button" role="tab" aria-selected="false" class="relative z-10 whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium transition-colors duration-300 ease-in-out focus-visible:outline-none text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer"><span class="block select-none">Code</span></button><button type="button" role="tab" aria-selected="true" class="relative z-10 whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium transition-colors duration-300 ease-in-out focus-visible:outline-none text-gray-900 dark:text-gray-50 cursor-pointer"><span class="block select-none">Preview</span></button></div></div><div class="relative min-h-0 flex-1 overflow-hidden"><iframe src="./index_files/preview-1.0.0.html" class="h-full w-full overflow-hidden" style="opacity: 1; transition: opacity 0.3s ease-in-out;"></iframe></div></div></div></div></div></div></div></div><div class="absolute top-0 z-10 h-full w-2 cursor-col-resize bg-transparent left-0"><div class="absolute inset-y-0 -left-1 -right-1"></div></div></div></div></div></div></div></div></div><canvas id="0.2940228519912611" width="1566" height="799" style="position: fixed; pointer-events: none; z-index: 1000000; top: 0px; left: 0px; width: 1566px; height: 799px;"></canvas><canvas id="0.9352225831751696" style="position: fixed; pointer-events: none; z-index: 1000000; top: 0px; left: 0px; width: 1566px; height: 799px;" width="1566" height="799"></canvas></div><script>(function(){var g={},h={};function a(e){var r=h[e];if(r!==void 0)return r.exports;var c=h[e]={id:e,loaded:!1,exports:{}};return g[e].call(c.exports,c,c.exports,a),c.loaded=!0,c.exports}a.m=g,(function(){a.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return a.d(r,{a:r}),r}})(),(function(){var e=Object.getPrototypeOf?function(c){return Object.getPrototypeOf(c)}:function(c){return c.__proto__},r;a.t=function(c,b){if(b&1&&(c=this(c)),b&8||typeof c=="object"&&c&&(b&4&&c.__esModule||b&16&&typeof c.then=="function"))return c;var d=Object.create(null);a.r(d);var n={};r=r||[null,e({}),e([]),e(e)];for(var f=b&2&&c;typeof f=="object"&&!~r.indexOf(f);f=e(f))Object.getOwnPropertyNames(f).forEach(function(i){n[i]=function(){return c[i]}});return n.default=function(){return c},a.d(d,n),d}})(),(function(){a.d=function(e,r){for(var c in r)a.o(r,c)&&!a.o(e,c)&&Object.defineProperty(e,c,{enumerable:!0,get:r[c]})}})(),(function(){a.f={},a.e=function(e){return Promise.all(Object.keys(a.f).reduce(function(r,c){return a.f[c](e,r),r},[]))}})(),(function(){a.u=function(e){return""+(e===8792?"main":e)+"."+{17:"3ce94f15",23:"26ea0fe0",26:"dcab4a48",38:"88f8d2e6",77:"16f7802b",88:"02d8f2d8",155:"b4472750",164:"3a957424",175:"6608942e",191:"fab23e42",252:"d705932e",289:"8736a679",308:"893a3235",318:"7b3e06a7",359:"751d04c4",397:"7b9fccc6",425:"1ae36d75",479:"a22ddd98",490:"465ac2a5",509:"0d978b4e",525:"5be930fe",569:"4244b3e0",675:"14040695",789:"505fe17b",813:"72acb2c3",875:"8a9374b4",885:"64747b1c",896:"4d065bf0",914:"153f39af",965:"6974ef64",975:"c3f9e1c6",1015:"e178893b",1085:"bd87ed01",1118:"0fda859f",1146:"1ca9e738",1158:"3faf5b64",1164:"ed940600",1195:"ddb57503",1253:"d183e7c1",1305:"061a79df",1361:"bd9f6fed",1369:"bd54150b",1379:"a9702adc",1387:"ab30d79d",1408:"06b4202d",1478:"297da5a4",1495:"f579b91a",1500:"da8d3e79",1513:"e08468de",1526:"bdc0b53a",1541:"2ad24e01",1550:"16138242",1561:"76c4d229",1596:"72be2268",1602:"695eccfd",1604:"924e45fd",1607:"3e566687",1627:"aed499ff",1647:"d08e0778",1730:"70e6aa77",1734:"27bf62b9",1738:"b74cae6e",1786:"867f9714",1791:"6c4638a4",1830:"9ff35f8f",1839:"3b36fb3c",1857:"2d1f8008",1861:"e4732eeb",1869:"d73e0cfc",1870:"903bfd52",1906:"a5c44efa",1916:"7f64182d",1925:"4ed07a9c",1940:"18caed50",1943:"78ac7169",1985:"80805c72",2017:"03a303cf",2031:"a8833d58",2038:"7ad997db",2052:"127bc00b",2055:"28a451c7",2098:"3fe22da9",2113:"509deb00",2150:"bda01af4",2157:"4d606f8b",2210:"3cc4fab8",2224:"82e5a0be",2236:"7c4be5a5",2254:"e2801751",2265:"ad203745",2282:"34b0a2ed",2300:"01b923f8",2343:"66426675",2346:"62e64ab9",2375:"f9d82a80",2380:"2917c4f5",2388:"6cdad17c",2408:"4e92ec43",2427:"78e7414f",2431:"e1700180",2484:"fd512464",2573:"9329c6c2",2607:"09814d14",2637:"6b9d1bab",2647:"2a0210dc",2651:"b189f78f",2676:"fb26a009",2698:"5e2c4603",2707:"fb91fcd6",2728:"1a93b280",2740:"667eed9b",2790:"de3a72c9",2820:"382d6c32",2842:"e9cf0174",2876:"6963ade4",2884:"50b26fde",2888:"54c5441f",2900:"9dd5a3b5",2902:"23797efb",2933:"021653aa",3008:"ddaa8006",3085:"9b3515e6",3090:"00a07832",3122:"4e919868",3153:"cebc3e0b",3163:"491500a8",3181:"029eb86c",3227:"8feca73b",3244:"6434ea7f",3273:"a9312a08",3281:"9a7e84dd",3315:"ebca9a0c",3325:"d2785d64",3348:"784f901a",3396:"72a28221",3412:"6adced43",3440:"f6f6ab9d",3441:"0388497d",3467:"2c89186c",3492:"5fe00db7",3525:"57e3048d",3591:"11ad7475",3605:"227b78c9",3632:"510f7795",3636:"20e8bfd5",3650:"2abfd70d",3651:"cd3d50dd",3688:"6f827492",3727:"918e0577",3737:"3bc89b99",3761:"cffe81b4",3783:"c52ff04e",3789:"1d9e7305",3881:"d82c60aa",3883:"0fd308ff",3893:"8fcaf3ca",3907:"2f7951c4",3925:"a1ad7798",3973:"7bb28be5",4004:"32beacb4",4005:"c40aed63",4026:"946163b8",4085:"ec7defc9",4177:"21771b1d",4197:"3ff3680a",4202:"4e4de0d2",4210:"2638a5a3",4236:"f1942d75",4240:"8a7b84f3",4257:"65d5368b",4312:"99e2ddbe",4321:"cd425926",4324:"35ca1a6e",4334:"3a0d7f4d",4340:"8c9faac7",4343:"076f72cb",4351:"529aae44",4357:"df28adc0",4358:"69282b0f",4379:"cecb6171",4408:"b0bf6556",4415:"aa7ca1d2",4440:"67356a96",4442:"cd47c5f0",4468:"a6725f24",4485:"047ff09c",4492:"a03f034e",4544:"7cf9cef1",4572:"a13dd05c",4578:"26d4d0b3",4600:"072f77ea",4608:"9be718a7",4645:"72f41968",4649:"2be5bd02",4679:"7730c712",4731:"b4dea0e0",4756:"fe9afe91",4790:"763a4d80",4796:"7f9daf43",4807:"3915df96",4856:"c633663f",4859:"58e500fb",4876:"d0c96e50",4892:"835019df",4908:"c3028874",4918:"e6ad4808",4921:"235fd4e1",4925:"72fdfeca",4977:"d4773642",5066:"3fc01049",5107:"a1460ac1",5170:"a6b11669",5192:"08895bc4",5196:"cd75c191",5230:"56a337bd",5310:"87a449c3",5362:"914fb016",5450:"9ea7cc22",5510:"06c4cea2",5615:"4e67cba3",5617:"91b9036e",5626:"86f6ac6a",5675:"0537be55",5711:"008c047f",5759:"1b671a7c",5785:"6b544769",5833:"0b01a910",5875:"1635c979",5913:"22fe8599",5949:"2c84960c",6008:"b1fc16e8",6014:"72ae3a91",6086:"ddb9eaf1",6148:"41d8c9ff",6152:"48d7881e",6228:"528f1093",6237:"e7dcd134",6268:"50424e47",6280:"d0f53251",6362:"9441b262",6377:"4c1160e5",6401:"772ab34e",6425:"e2a844c6",6432:"fe1222a8",6458:"597b94c7",6473:"825d97ee",6478:"af29bbd0",6501:"698464a0",6507:"0f48deb7",6512:"469767ec",6536:"dfc1faf6",6551:"8d1b4b45",6578:"aae9f900",6599:"2d30c991",6661:"309bc85e",6697:"1d1e9f3d",6709:"08bc56b8",6716:"4d483194",6762:"a251a015",6776:"80f2913e",6852:"a373dba4",6860:"c3c15351",6895:"3bdbab15",6913:"da54ca03",6929:"fb32f3dd",6944:"7a45795f",6963:"b0025077",6986:"b7453209",6995:"07d0387e",7060:"d7aaf4ad",7074:"627548fd",7117:"c57f1b84",7133:"06dbf246",7186:"2b3c593f",7214:"0a438ec0",7231:"792cdb21",7256:"997fda75",7286:"62db396d",7291:"13e066f7",7297:"045538b0",7311:"3ecdfbe6",7329:"771d8ae8",7333:"4f5a2b0a",7348:"70ee1467",7406:"65def057",7505:"60ff375d",7543:"ccab7c54",7570:"0a9f3e46",7592:"f8800d2a",7620:"53164be9",7675:"7608f8d7",7681:"98d34722",7714:"34d1a483",7727:"65163895",7795:"3ac8b640",7824:"153202d9",7864:"0f014c38",7902:"6e31a298",7952:"34410091",7954:"09ee8604",7995:"4b41bb15",8001:"855d006f",8049:"d78de047",8058:"cc8992a1",8076:"92c0d8e5",8193:"36846e68",8209:"46064783",8238:"a99bd472",8271:"81a92b26",8277:"bb73f396",8352:"66b582de",8369:"9d94a30b",8401:"70e33c7a",8468:"d05ca357",8491:"e71b7360",8494:"39e95933",8504:"8376a195",8505:"22a2d94a",8577:"a745ebf0",8675:"8ed2bd33",8706:"735711a4",8740:"d3e9aef1",8748:"bede1f3a",8768:"b2cd9753",8789:"d6401827",8792:"bb3be685",8808:"e8b32885",8849:"e4b6b168",8856:"a9dca5ab",8869:"36b48b7f",8910:"a3e37214",8979:"a1dc4e26",8999:"00362c07",9051:"e1d9ea4c",9098:"c8ffac0c",9142:"59d273cc",9154:"be70870f",9163:"80b48e60",9176:"f37a518c",9188:"e2e73ae1",9220:"39aa870d",9275:"c4a09722",9306:"3506d873",9351:"23ce7e08",9353:"95899e66",9389:"f7aac6dc",9413:"58d8506b",9439:"5863113b",9500:"dac9276d",9501:"d6e5d405",9518:"bf2fec79",9532:"cf8dbec4",9548:"0f69112b",9578:"b8e89438",9607:"dcea7984",9642:"7db05573",9756:"36e78422",9779:"da090290",9812:"66058242",9834:"2e49d96a",9836:"c186fe9e",9878:"e9cf0b26",9892:"39c9114d",9911:"230b5bef",9917:"dc5d373f",9952:"46e8bf34",9965:"bd1e2d4d",9996:"4898d82d"}[e]+".chunk.js"}})(),(function(){a.miniCssF=function(e){return""+(e===8792?"main":e)+"."+{4340:"30fc1413",4358:"79e2bb3d",5450:"c81c38ef",6458:"c81c38ef",8792:"e2904b27",9351:"d81fb196",9779:"30fc1413"}[e]+".chunk.css"}})(),(function(){a.g=(function(){if(typeof globalThis=="object")return globalThis;try{return this||new Function("return this")()}catch{if(typeof window=="object")return window}})()})(),(function(){a.o=function(e,r){return Object.prototype.hasOwnProperty.call(e,r)}})(),(function(){var e={},r="mimo-chat:";a.l=function(c,b,d,n){if(e[c]){e[c].push(b);return}var f,i;if(d!==void 0)for(var o=document.getElementsByTagName("script"),t=0;t<o.length;t++){var u=o[t];if(u.getAttribute("src")==c||u.getAttribute("data-webpack")==r+d){f=u;break}}f||(i=!0,f=document.createElement("script"),f.charset="utf-8",f.timeout=120,a.nc&&f.setAttribute("nonce",a.nc),f.setAttribute("data-webpack",r+d),f.src=c,f.src.indexOf(window.location.origin+"/")!==0&&(f.crossOrigin="anonymous")),e[c]=[b];var s=function(p,m){f.onerror=f.onload=null,clearTimeout(l);var v=e[c];if(delete e[c],f.parentNode&&f.parentNode.removeChild(f),v&&v.forEach(function(_){return _(m)}),p)return p(m)},l=setTimeout(s.bind(null,void 0,{type:"timeout",target:f}),12e4);f.onerror=s.bind(null,f.onerror),f.onload=s.bind(null,f.onload),i&&document.head.appendChild(f)}})(),(function(){a.r=function(e){typeof Symbol<"u"&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})}})(),(function(){a.nmd=function(e){return e.paths=[],e.children||(e.children=[]),e}})(),(function(){a.p=""})(),(function(){if(!(typeof document>"u")){var e=function(d,n,f,i,o){var t=document.createElement("link");t.rel="stylesheet",t.type="text/css",a.nc&&(t.nonce=a.nc);var u=function(s){if(t.onerror=t.onload=null,s.type==="load")i();else{var l=s&&s.type,p=s&&s.target&&s.target.href||n,m=new Error("Loading CSS chunk "+d+` failed.
-(`+l+": "+p+")");m.name="ChunkLoadError",m.code="CSS_CHUNK_LOAD_FAILED",m.type=l,m.request=p,t.parentNode&&t.parentNode.removeChild(t),o(m)}};return t.onerror=t.onload=u,t.href=n,t.href.indexOf(window.location.origin+"/")!==0&&(t.crossOrigin="anonymous"),(function(l){var p=document.querySelector("#react-template-css-before");p?p.parentNode.insertBefore(l,p):document.head.appendChild(l)})(t),t},r=function(d,n){for(var f=document.getElementsByTagName("link"),i=0;i<f.length;i++){var o=f[i],t=o.getAttribute("data-href")||o.getAttribute("href");if(o.rel==="stylesheet"&&(t===d||t===n))return o}for(var u=document.getElementsByTagName("style"),i=0;i<u.length;i++){var o=u[i],t=o.getAttribute("data-href");if(t===d||t===n)return o}},c=function(d){return new Promise(function(n,f){var i=a.miniCssF(d),o=a.p+i;if(r(i,o))return n();e(d,o,null,n,f)})},b={4577:0};a.f.miniCss=function(d,n){var f={4340:1,4358:1,5450:1,6458:1,8792:1,9351:1,9779:1};b[d]?n.push(b[d]):b[d]!==0&&f[d]&&n.push(b[d]=c(d).then(function(){b[d]=0},function(i){throw delete b[d],i}))}}})(),(function(){a.b=document.baseURI||self.location.href;var e={4577:0};a.f.j=function(b,d){var n=a.o(e,b)?e[b]:void 0;if(n!==0)if(n)d.push(n[2]);else{var f=new Promise(function(u,s){n=e[b]=[u,s]});d.push(n[2]=f);var i=a.p+a.u(b),o=new Error,t=function(u){if(a.o(e,b)&&(n=e[b],n!==0&&(e[b]=void 0),n)){var s=u&&(u.type==="load"?"missing":u.type),l=u&&u.target&&u.target.src;o.message="Loading chunk "+b+` failed.
-(`+s+": "+l+")",o.name="ChunkLoadError",o.type=s,o.request=l,n[1](o)}};a.l(i,t,"chunk-"+b,b)}};var r=function(b,d){var n=d[0],f=d[1],i=d[2],o,t,u=0;if(n.some(function(l){return e[l]!==0})){for(o in f)a.o(f,o)&&(a.m[o]=f[o]);if(i)var s=i(a)}for(b&&b(d);u<n.length;u++)t=n[u],a.o(e,t)&&e[t]&&e[t][0](),e[t]=0},c=self.webpackChunkmimo_chat=self.webpackChunkmimo_chat||[];c.forEach(r.bind(null,0)),c.push=r.bind(null,c.push.bind(c))})();var y={};Promise.all([a.e(4440),a.e(4358),a.e(8792)]).then(a.bind(a,97192))})();</script><div id="give-freely-root-ejkiikneibegknkgimmihdpcbcedgmpo" class="give-freely-root" data-extension-id="ejkiikneibegknkgimmihdpcbcedgmpo" data-extension-name="Volume Booster" style="display: block;"><template shadowrootmode="open"><style>
-  :host {
-    all: initial;
-  }
-
-  .gf-scroll-remove::-webkit-scrollbar {
-    border-radius-bottom-right: 15px;
-  }
-
-  button {
-    cursor: pointer;
-    transition: transform 0.1s ease;
-  }
-
-  button:active {
-    transform: scale(0.98);
-  }
-
-  .give-freely-close-button:hover {
-    opacity: 0.7;
-  }
-
-  input[type="radio"] {
-    margin-right: 8px;
-  }
-
-  hr {
-    border: none;
-    border-top: 1px solid #e5e5e5;
-    margin: 1em 0;
-  }
-
-  @media (max-width: 600px), (max-height: 480px) {
-    #give-freely-checkout-popup {
-      display: none !important;
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mohamed Basta — Biographie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Mono:wght@300;400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0c0b09;
+      --bg-warm: #13110e;
+      --surface: #1a1714;
+      --surface-light: #252119;
+      --accent: #c9a227;
+      --accent-dim: #8b7119;
+      --accent-glow: rgba(201,162,39,0.10);
+      --text-primary: #f0ece4;
+      --text-body: #c8c0b4;
+      --text-muted: #7a756c;
+      --text-faint: #4a463f;
+      --border: #2a2620;
+      --danger: #a33;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --display: 'Instrument Serif', Georgia, serif;
+      --mono: 'DM Mono', 'Courier New', monospace;
     }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth;font-size:16px}
+    body{background:var(--bg);color:var(--text-body);font-family:var(--serif);font-weight:300;line-height:1.75;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:.03;pointer-events:none;z-index:9999}
+    ::selection{background:var(--accent);color:var(--bg)}
+    a{color:var(--accent);text-decoration:none;transition:opacity .3s}a:hover{opacity:.75}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,var(--bg) 60%,transparent);pointer-events:none}
+    nav>*{pointer-events:auto}
+    .nav-logo{font-family:var(--display);font-size:1.1rem;color:var(--text-primary);font-style:italic}
+    .nav-links{display:flex;gap:2.5rem;list-style:none}
+    .nav-links a{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);transition:color .3s}
+    .nav-links a:hover{color:var(--accent);opacity:1}
+
+    /* HERO */
+    .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 6vw;position:relative}
+    .hero::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,var(--accent-glow) 0%,transparent 70%);pointer-events:none}
+    .hero-dates{font-family:var(--mono);font-size:.65rem;letter-spacing:.4em;text-transform:uppercase;color:var(--accent-dim);margin-bottom:2.5rem;opacity:0;animation:fadeUp .8s ease .2s forwards}
+    .hero h1{font-family:var(--display);font-size:clamp(4rem,9vw,8rem);font-weight:400;line-height:.95;color:var(--text-primary);margin-bottom:.75rem;opacity:0;animation:fadeUp 1s ease .4s forwards}
+    .hero h1 em{font-style:italic;color:var(--accent)}
+    .hero-subtitle{font-family:var(--serif);font-size:clamp(1.1rem,2vw,1.4rem);color:var(--text-muted);max-width:500px;margin:1.5rem auto 0;line-height:1.8;opacity:0;animation:fadeUp .8s ease .7s forwards}
+    .hero-line{width:1px;height:80px;background:linear-gradient(to bottom,var(--accent-dim),transparent);margin-top:3rem;opacity:0;animation:fadeUp .8s ease 1s forwards}
+
+    /* SECTIONS */
+    section{padding:8rem 6vw;position:relative}
+    .section-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.35em;text-transform:uppercase;color:var(--accent-dim);margin-bottom:1rem}
+    .section-title{font-family:var(--display);font-size:clamp(2.2rem,4vw,3.5rem);font-weight:400;color:var(--text-primary);line-height:1.15;margin-bottom:3rem}
+    .divider{width:60px;height:1px;background:var(--accent-dim);margin:0 6vw}
+
+    /* INTRO */
+    .intro{display:grid;grid-template-columns:1fr 1.3fr;gap:6rem;align-items:start}
+    .intro-quote{font-family:var(--display);font-style:italic;font-size:clamp(1.5rem,2.2vw,2rem);color:var(--text-primary);line-height:1.5;position:sticky;top:8rem}
+    .intro-quote::before{content:'';display:block;width:40px;height:3px;background:var(--accent);margin-bottom:2rem}
+    .intro-body p{font-size:1.1rem;margin-bottom:1.5rem;color:var(--text-body)}
+    .intro-body p:first-of-type::first-letter{font-family:var(--display);font-size:4rem;float:left;line-height:.8;margin-right:.5rem;margin-top:.15rem;color:var(--accent)}
+
+    /* TIMELINE */
+    .timeline-section{background:var(--bg-warm);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+    .timeline{max-width:900px;margin:0 auto;position:relative}
+    .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,var(--border),var(--accent-dim),var(--border),transparent);transform:translateX(-50%)}
+    .timeline-item{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-bottom:5rem;position:relative;opacity:0;transform:translateY(30px);transition:all .8s ease}
+    .timeline-item.visible{opacity:1;transform:translateY(0)}
+    .timeline-item::before{content:'';position:absolute;left:50%;top:.5rem;width:9px;height:9px;background:var(--accent);border-radius:50%;transform:translateX(-50%);box-shadow:0 0 20px var(--accent-glow);z-index:2}
+    .timeline-year{text-align:right;padding-right:3rem}
+    .timeline-year .year{font-family:var(--display);font-size:3rem;color:var(--accent);line-height:1;margin-bottom:.5rem}
+    .timeline-year .location{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-faint)}
+    .timeline-content h3{font-family:var(--display);font-size:1.5rem;font-weight:400;color:var(--text-primary);margin-bottom:.75rem}
+    .timeline-content p{font-size:1rem;color:var(--text-muted);line-height:1.8}
+    .timeline-item:nth-child(even){direction:rtl}
+    .timeline-item:nth-child(even) .timeline-year{text-align:left;padding-right:0;padding-left:3rem;direction:ltr}
+    .timeline-item:nth-child(even) .timeline-content{direction:ltr}
+
+    /* PULLQUOTE */
+    .pullquote-section{text-align:center;padding:10rem 10vw;position:relative}
+    .pullquote-section::before{content:'\201C';position:absolute;top:4rem;left:50%;transform:translateX(-50%);font-family:var(--display);font-size:12rem;color:var(--accent-dim);opacity:.12;line-height:1}
+    .pullquote{font-family:var(--display);font-style:italic;font-size:clamp(1.6rem,3vw,2.6rem);color:var(--text-primary);line-height:1.5;max-width:750px;margin:0 auto 2rem}
+    .pullquote-source{font-family:var(--mono);font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent)}
+
+    /* GALLERY */
+    .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3rem}
+    .gallery-item{position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--border);aspect-ratio:4/3;opacity:0;transform:scale(.95);transition:all .7s ease}
+    .gallery-item.visible{opacity:1;transform:scale(1)}
+    .gallery-item:first-child{grid-column:span 2;aspect-ratio:16/9}
+    .gallery-item-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.5rem;background:linear-gradient(135deg,var(--surface) 0%,var(--surface-light) 100%);transition:transform .5s}
+    .gallery-item:hover .gallery-item-inner{transform:scale(1.03)}
+    .gallery-item-inner img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+    .gallery-icon{font-family:var(--display);font-style:italic;font-size:2.5rem;color:var(--accent-dim);opacity:.35}
+    .gallery-caption{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-faint);position:relative;z-index:2;background:rgba(12,11,9,.7);padding:.3rem .8rem;backdrop-filter:blur(4px)}
+
+    /* LEGACY */
+    .legacy-content{display:grid;grid-template-columns:2fr 1fr;gap:6rem;align-items:start}
+    .legacy-text p{font-size:1.1rem;margin-bottom:1.5rem;color:var(--text-body)}
+    .legacy-sidebar{position:sticky;top:8rem}
+    .legacy-stat{padding:1.75rem 0;border-bottom:1px solid var(--border)}
+    .legacy-stat:first-child{border-top:1px solid var(--border)}
+    .legacy-stat-value{font-family:var(--display);font-size:2.5rem;color:var(--accent);line-height:1;margin-bottom:.35rem}
+    .legacy-stat-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-faint)}
+
+    /* FOOTER */
+    footer{border-top:1px solid var(--border);padding:4rem 6vw;display:grid;grid-template-columns:1fr 1fr 1fr;gap:3rem;align-items:start}
+    .footer-brand{font-family:var(--display);font-size:1.3rem;color:var(--text-primary);margin-bottom:.5rem}
+    .footer-note{font-family:var(--mono);font-size:.6rem;color:var(--text-faint);letter-spacing:.1em;line-height:1.9}
+    .footer-nav{display:flex;flex-direction:column;gap:.75rem}
+    .footer-nav a{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)}
+    .footer-right{text-align:right}
+    .footer-right .footer-note{display:flex;flex-direction:column;align-items:flex-end;gap:.5rem}
+    .back-to-top{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-dim);cursor:pointer;background:none;border:none;margin-top:1rem;transition:color .3s}
+    .back-to-top:hover{color:var(--accent)}
+
+    /* ===== ADD BUTTON ===== */
+    #addBtn{
+      position:fixed;bottom:2.5rem;right:2.5rem;z-index:120;
+      width:56px;height:56px;border-radius:50%;border:none;
+      background:var(--accent);color:var(--bg);
+      font-family:var(--mono);font-size:1.6rem;font-weight:400;
+      cursor:pointer;
+      box-shadow:0 4px 24px rgba(201,162,39,.3);
+      transition:transform .25s ease,box-shadow .25s ease;
+      animation:addPulse 2.5s ease infinite;
+    }
+    #addBtn:hover{transform:scale(1.1) rotate(90deg);box-shadow:0 6px 32px rgba(201,162,39,.45);animation:none}
+    @keyframes addPulse{
+      0%,100%{box-shadow:0 4px 24px rgba(201,162,39,.3)}
+      50%{box-shadow:0 4px 24px rgba(201,162,39,.3),0 0 0 14px rgba(201,162,39,.08)}
+    }
+
+    /* ===== PANEL OVERLAY ===== */
+    #panelOverlay{
+      position:fixed;inset:0;background:rgba(0,0,0,.65);
+      opacity:0;visibility:hidden;
+      transition:opacity .4s ease,visibility .4s ease;
+      z-index:150;backdrop-filter:blur(3px);
+    }
+    #panelOverlay.open{opacity:1;visibility:visible}
+
+    /* ===== EDIT PANEL ===== */
+    #editPanel{
+      position:fixed;top:0;right:0;
+      width:580px;max-width:100vw;height:100vh;
+      background:var(--bg-warm);
+      border-left:1px solid var(--border);
+      transform:translateX(100%);
+      transition:transform .4s cubic-bezier(.4,0,.2,1);
+      z-index:200;display:flex;flex-direction:column;
+    }
+    #editPanel.open{transform:translateX(0)}
+
+    .panel-header{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:1.5rem 2rem;border-bottom:1px solid var(--border);
+      flex-shrink:0;
+    }
+    .panel-header h2{
+      font-family:var(--display);font-size:1.4rem;font-weight:400;
+      color:var(--text-primary);font-style:italic;
+    }
+    .panel-close{
+      width:36px;height:36px;border:1px solid var(--border);
+      background:transparent;color:var(--text-muted);
+      font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+      transition:all .25s;
+    }
+    .panel-close:hover{border-color:var(--accent);color:var(--accent)}
+
+    .panel-body{
+      flex:1;overflow-y:auto;padding:1.5rem 2rem 2rem;
+      scrollbar-width:thin;scrollbar-color:var(--border) transparent;
+    }
+    .panel-body::-webkit-scrollbar{width:6px}
+    .panel-body::-webkit-scrollbar-track{background:transparent}
+    .panel-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+    .panel-footer{
+      padding:1rem 2rem;border-top:1px solid var(--border);
+      display:flex;gap:.75rem;flex-shrink:0;
+    }
+
+    /* ACCORDION */
+    .accordion{margin-bottom:.5rem}
+    .accordion-header{
+      width:100%;display:flex;justify-content:space-between;align-items:center;
+      padding:.85rem 1rem;background:var(--surface);border:1px solid var(--border);
+      color:var(--text-primary);font-family:var(--mono);font-size:.65rem;
+      letter-spacing:.15em;text-transform:uppercase;cursor:pointer;
+      transition:all .25s;
+    }
+    .accordion-header:hover{border-color:var(--accent-dim)}
+    .accordion-header.active{border-color:var(--accent-dim);background:var(--surface-light)}
+    .accordion-icon{font-size:1rem;transition:transform .3s;color:var(--accent-dim)}
+    .accordion-header.active .accordion-icon{transform:rotate(45deg)}
+    .accordion-body{
+      max-height:0;overflow:hidden;
+      transition:max-height .4s ease;
+      border-left:1px solid var(--border);border-right:1px solid var(--border);
+      border-bottom:1px solid var(--border);background:rgba(26,23,20,.5);
+    }
+    .accordion-body-inner{padding:1.25rem 1rem}
+
+    /* FORM */
+    .form-group{margin-bottom:1rem}
+    .form-group label{
+      display:block;font-family:var(--mono);font-size:.58rem;
+      letter-spacing:.15em;text-transform:uppercase;
+      color:var(--text-faint);margin-bottom:.4rem;
+    }
+    .form-group input[type="text"],
+    .form-group textarea{
+      width:100%;padding:.7rem .9rem;
+      background:var(--surface);border:1px solid var(--border);
+      color:var(--text-body);font-family:var(--serif);font-size:.95rem;
+      font-weight:300;line-height:1.6;
+      transition:border-color .25s;
+    }
+    .form-group input:focus,.form-group textarea:focus{
+      outline:none;border-color:var(--accent-dim);
+    }
+    .form-group textarea{resize:vertical;min-height:80px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+
+    /* DYNAMIC ENTRIES */
+    .form-dynamic-entry{
+      background:var(--surface);border:1px solid var(--border);
+      padding:1rem;margin-bottom:.75rem;position:relative;
+    }
+    .entry-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem}
+    .entry-num{font-family:var(--mono);font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent-dim)}
+    .btn-remove{
+      width:28px;height:28px;border:1px solid var(--border);
+      background:transparent;color:var(--text-faint);
+      font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+      transition:all .25s;
+    }
+    .btn-remove:hover{border-color:var(--danger);color:var(--danger)}
+
+    .btn-add{
+      width:100%;padding:.65rem;border:1px dashed var(--border);
+      background:transparent;color:var(--text-muted);
+      font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;
+      text-transform:uppercase;cursor:pointer;transition:all .25s;
+    }
+    .btn-add:hover{border-color:var(--accent-dim);color:var(--accent)}
+
+    /* PANEL BUTTONS */
+    .btn-save{
+      flex:1;padding:.75rem;border:none;
+      background:var(--accent);color:var(--bg);
+      font-family:var(--mono);font-size:.65rem;letter-spacing:.15em;
+      text-transform:uppercase;cursor:pointer;font-weight:400;
+      transition:all .25s;
+    }
+    .btn-save:hover{background:#dab630}
+    .btn-cancel{
+      padding:.75rem 1.5rem;border:1px solid var(--border);
+      background:transparent;color:var(--text-muted);
+      font-family:var(--mono);font-size:.65rem;letter-spacing:.15em;
+      text-transform:uppercase;cursor:pointer;
+      transition:all .25s;
+    }
+    .btn-cancel:hover{border-color:var(--text-muted);color:var(--text-body)}
+    .btn-reset{
+      padding:.75rem 1rem;border:1px solid transparent;
+      background:transparent;color:var(--text-faint);
+      font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;
+      text-transform:uppercase;cursor:pointer;margin-right:auto;
+      transition:all .25s;
+    }
+    .btn-reset:hover{color:var(--danger);border-color:var(--danger)}
+
+    .form-group .file-label{
+      display:inline-block;padding:.45rem .9rem;
+      border:1px solid var(--border);color:var(--text-muted);
+      font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;
+      text-transform:uppercase;cursor:pointer;transition:all .25s;
+      margin-top:.3rem;
+    }
+    .form-group .file-label:hover{border-color:var(--accent-dim);color:var(--accent)}
+    .form-group input[type="file"]{display:none}
+    .form-group .file-name{
+      font-family:var(--mono);font-size:.55rem;color:var(--text-faint);
+      margin-top:.3rem;display:block;
+    }
+    .form-section-title{
+      font-family:var(--display);font-size:1.1rem;color:var(--text-primary);
+      margin-bottom:1rem;font-style:italic;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+
+    /* RESPONSIVE */
+    @media(max-width:1024px){
+      .intro{grid-template-columns:1fr;gap:3rem}
+      .intro-quote{position:static}
+      .legacy-content{grid-template-columns:1fr;gap:3rem}
+      .timeline::before{left:2rem}
+      .timeline-item{grid-template-columns:1fr;gap:1rem;padding-left:4rem}
+      .timeline-item::before{left:2rem;transform:translateX(-50%)}
+      .timeline-item:nth-child(even){direction:ltr}
+      .timeline-year{text-align:left;padding:0}
+      .timeline-item:nth-child(even) .timeline-year{padding-left:0}
+      .gallery-grid{grid-template-columns:1fr 1fr}
+      .gallery-item:first-child{grid-column:span 1}
+    }
+    @media(max-width:600px){
+      nav{padding:1rem 1.5rem}.nav-links{display:none}
+      section{padding:5rem 1.5rem}
+      .gallery-grid{grid-template-columns:1fr}
+      footer{grid-template-columns:1fr;gap:2rem}
+      .footer-right{text-align:left}.footer-right .footer-note{align-items:flex-start}
+      #editPanel{width:100vw}
+      .form-row{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">Biographie</div>
+    <ul class="nav-links">
+      <li><a href="#introduction">Introduction</a></li>
+      <li><a href="#parcours">Parcours</a></li>
+      <li><a href="#galerie">Galerie</a></li>
+      <li><a href="#heritage">Héritage</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-dates" id="heroDates"></div>
+    <h1 id="heroName"></h1>
+    <p class="hero-subtitle" id="heroSubtitle"></p>
+    <div class="hero-line"></div>
+  </header>
+
+  <section id="introduction">
+    <div class="section-label">01 — Introduction</div>
+    <div class="intro">
+      <blockquote class="intro-quote" id="introQuote"></blockquote>
+      <div class="intro-body" id="introBody"></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="parcours" class="timeline-section">
+    <div class="section-label" style="text-align:center;">02 — Parcours</div>
+    <h2 class="section-title" style="text-align:center;">Les grandes étapes<br>d'une vie</h2>
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <section class="pullquote-section">
+    <p class="pullquote" id="pullquoteText"></p>
+    <span class="pullquote-source" id="pullquoteSource"></span>
+  </section>
+
+  <section id="galerie">
+    <div class="section-label">03 — Galerie</div>
+    <h2 class="section-title">Fragments d'une vie</h2>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </section>
+
+  <section id="heritage">
+    <div class="section-label">04 — Héritage</div>
+    <h2 class="section-title">Ce qu'il laisse au monde</h2>
+    <div class="legacy-content">
+      <div class="legacy-text" id="legacyText"></div>
+      <div class="legacy-sidebar" id="legacyStats"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div>
+      <div class="footer-brand" id="footerBrand"></div>
+      <p class="footer-note">Biographie en cours de rédaction<br>&copy; 2025 — Tous droits réservés</p>
+    </div>
+    <div class="footer-nav">
+      <a href="#introduction">Introduction</a>
+      <a href="#parcours">Parcours</a>
+      <a href="#galerie">Galerie</a>
+      <a href="#heritage">Héritage</a>
+    </div>
+    <div class="footer-right">
+      <p class="footer-note">Conçu avec soin et respect<br>Typographie : Cormorant Garamond &amp; DM Mono</p>
+      <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Retour en haut</button>
+    </div>
+  </footer>
+
+  <!-- ===== BOUTON + ===== -->
+  <button id="addBtn" title="Modifier la biographie">+</button>
+
+  <!-- ===== OVERLAY ===== -->
+  <div id="panelOverlay"></div>
+
+  <!-- ===== PANNEAU D'ÉDITION ===== -->
+  <div id="editPanel">
+    <div class="panel-header">
+      <h2>Modifier la biographie</h2>
+      <button class="panel-close" id="panelClose">&times;</button>
+    </div>
+    <div class="panel-body">
+
+      <!-- IDENTITÉ -->
+      <div class="accordion">
+        <button class="accordion-header active" onclick="toggleAcc(this)">
+          <span>Identité</span><span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body" style="max-height:600px">
+          <div class="accordion-body-inner">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Prénom</label>
+                <input type="text" id="fFirstName">
+              </div>
+              <div class="form-group">
+                <label>Nom</label>
+                <input type="text" id="fLastName">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Année de naissance</label>
+                <input type="text" id="fBirthYear">
+              </div>
+              <div class="form-group">
+                <label>Année de décès</label>
+                <input type="text" id="fDeathYear">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Sous-titre</label>
+              <textarea id="fSubtitle" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTRODUCTION -->
+      <div class="accordion">
+        <button class="accordion-header" onclick="toggleAcc(this)">
+          <span>Introduction</span><span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <div class="form-group">
+              <label>Citation d'exergue</label>
+              <textarea id="fIntroQuote" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Paragraphe 1</label>
+              <textarea id="fIntroP1" rows="5"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Paragraphe 2</label>
+              <textarea id="fIntroP2" rows="5"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Paragraphe 3</label>
+              <textarea id="fIntroP3" rows="5"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHRONOLOGIE -->
+      <div class="accordion">
+        <button class="accordion-header" onclick="toggleAcc(this)">
+          <span>Chronologie</span><span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <div id="timelineEntries"></div>
+            <button class="btn-add" onclick="addTimelineEntry()">+ Ajouter une étape</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CITATION -->
+      <div class="accordion">
+        <button class="accordion-header" onclick="toggleAcc(this)">
+          <span>Citation forte</span><span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <div class="form-group">
+              <label>Texte de la citation</label>
+              <textarea id="fPullText" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Source</label>
+              <input type="text" id="fPullSource">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GALERIE -->
+      <div class="accordion">
+        <button class="accordion-header" onclick="toggleAcc(this)">
+          <span>Galerie photos</span><span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <div id="galleryEntries"></div>
+            <button class="btn-add" onclick="addGalleryEntry()">+ Ajouter une photo</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- HÉRITAGE -->
+      <div class="accordion">
+        <button class="accordion-header" onclick="toggleAcc(this)">
+          <span>Héritage</span><span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <div class="form-group">
+              <label>Paragraphe 1</label>
+              <textarea id="fLegP1" rows="5"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Paragraphe 2</label>
+              <textarea id="fLegP2" rows="5"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Paragraphe 3</label>
+              <textarea id="fLegP3" rows="5"></textarea>
+            </div>
+            <div class="form-section-title" style="margin-top:1.5rem">Statistiques</div>
+            <div id="statEntries"></div>
+            <button class="btn-add" onclick="addStatEntry()">+ Ajouter une statistique</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="panel-footer">
+      <button class="btn-reset" id="btnReset">Réinitialiser</button>
+      <button class="btn-cancel" id="btnCancel">Annuler</button>
+      <button class="btn-save" id="btnSave">Enregistrer</button>
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================
+       DATA
+    ========================================================= */
+    const STORAGE_KEY = 'bastaBiography';
+const EDIT_PASSWORD = 'admin2026';
+
+
+    const defaultData = {
+      identity: {
+        firstName: "Mohamed",
+        lastName: "Basta",
+        birthYear: "1926",
+        deathYear: "1995",
+        subtitle: "Portrait d'une vie remarquable — un hommage à celui dont le souvenir continue de traverser les générations."
+      },
+      introduction: {
+        quote: "« Ceci est une citation emblématique de Mohamed Basta qui résume sa vision du monde ou un moment clé de sa vie. »",
+        paragraphs: [
+          "Mohamed Basta voit le jour en 1926. Dès ses premières années, il se distingue par une volonté et une détermination qui marqueront l'ensemble de son parcours. Ce texte d'introduction présente les circonstances de sa naissance, le contexte familial et géographique, ainsi que les premières influences qui ont façonné son caractère.",
+          "Ce deuxième paragraphe approfondit le contexte historique et social dans lequel Mohamed Basta a grandi — les défis de son époque, les valeurs transmises par sa famille, et les événements qui ont nourri sa vision du monde dès l'enfance.",
+          "Un troisième paragraphe peut venir poser le fil rouge de cette biographie : la thèse centrale, le trait dominant, la raison pour laquelle la vie de Mohamed Basta mérite d'être contée et préservée pour les générations futures."
+        ]
+      },
+      timeline: [
+        { year: "1926", location: "Lieu de naissance", title: "Naissance", description: "Mohamed Basta naît en 1926. Décrivez ici le contexte familial, le lieu, l'époque et les premières années de son enfance." },
+        { year: "1940", location: "Lieu", title: "Formation et jeunesse", description: "Décrivez les années de formation, les études, les rencontres déterminantes et les premiers engagements de Mohamed Basta." },
+        { year: "1950", location: "Lieu", title: "Un tournant décisif", description: "Racontez ici un événement majeur — professionnel, personnel ou historique — qui a redéfini la trajectoire de sa vie." },
+        { year: "1965", location: "Lieu", title: "Apport et contribution", description: "Décrivez la période d'accomplissement majeur, les réalisations concrètes et l'impact de Mohamed Basta dans son domaine." },
+        { year: "1980", location: "Lieu", title: "Maturité et transmission", description: "Décrivez les années de transmission du savoir, de mentorat, et la manière dont Mohamed Basta a influencé son entourage." },
+        { year: "1995", location: "Lieu", title: "Dernières années", description: "Décrivez les dernières années de sa vie, l'héritage qu'il a laissé et les circonstances de sa disparition en 1995." }
+      ],
+      pullquote: {
+        text: "« Une seconde citation forte de Mohamed Basta — un mot, une phrase, une pensée qui résonne au-delà de son époque. »",
+        source: "— Mohamed Basta, contexte et date"
+      },
+      gallery: [
+        { caption: "Photo 1 — description", image: "" },
+        { caption: "Photo 2 — description", image: "" },
+        { caption: "Photo 3 — description", image: "" },
+        { caption: "Photo 4 — description", image: "" },
+        { caption: "Photo 5 — description", image: "" },
+        { caption: "Photo 6 — description", image: "" }
+      ],
+      legacy: {
+        paragraphs: [
+          "Mohamed Basta s'éteint en 1995, après une vie de 69 ans marquée par l'engagement et la persévérance. Ce premier paragraphe revient sur les circonstances de sa disparition et l'émotion qu'elle a suscitée.",
+          "Ce paragraphe détaille l'héritage concret qu'il a laissé — une œuvre, une institution, une famille, des valeurs — et la manière dont cet héritage perdure aujourd'hui.",
+          "Enfin, ce texte conclut sur la portée symbolique de sa vie : ce que l'histoire de Mohamed Basta dit de son époque, de son peuple, et de ce que signifie une vie bien vécue."
+        ],
+        stats: [
+          { value: "1926", label: "Année de naissance" },
+          { value: "1995", label: "Année de disparition" },
+          { value: "69", label: "Années d'une vie" },
+          { value: "∞", label: "Mémoire préservée" }
+        ]
+      }
+    };
+
+    function loadData() {
+      try {
+        const s = localStorage.getItem(STORAGE_KEY);
+        if (s) return JSON.parse(s);
+      } catch(e) {}
+      return JSON.parse(JSON.stringify(defaultData));
+    }
+
+    function saveData(data) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    /* =========================================================
+       RENDER PAGE
+    ========================================================= */
+    function renderPage(data) {
+      const d = data.identity;
+      document.getElementById('heroDates').textContent = d.birthYear + ' — ' + d.deathYear;
+      document.getElementById('heroName').innerHTML = d.firstName + '<br><em>' + d.lastName + '</em>';
+      document.getElementById('heroSubtitle').textContent = d.subtitle;
+
+      document.getElementById('introQuote').textContent = data.introduction.quote;
+      document.getElementById('introBody').innerHTML = data.introduction.paragraphs
+        .filter(function(p){ return p.trim(); })
+        .map(function(p){ return '<p>' + p + '</p>'; }).join('');
+
+      var tl = data.timeline;
+      var tlHTML = '';
+      for (var i = 0; i < tl.length; i++) {
+        var e = tl[i];
+        tlHTML += '<div class="timeline-item visible">' +
+          '<div class="timeline-year"><div class="year">' + e.year + '</div>' +
+          '<div class="location">' + e.location + '</div></div>' +
+          '<div class="timeline-content"><h3>' + e.title + '</h3><p>' + e.description + '</p></div></div>';
+      }
+      document.getElementById('timeline').innerHTML = tlHTML;
+
+      document.getElementById('pullquoteText').textContent = data.pullquote.text;
+      document.getElementById('pullquoteSource').textContent = data.pullquote.source;
+
+      var rom = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
+      var gHTML = '';
+      for (var i = 0; i < data.gallery.length; i++) {
+        var g = data.gallery[i];
+        var inner = '';
+        if (g.image) {
+          inner = '<img src="' + g.image + '" alt="' + g.caption + '">';
+        } else {
+          inner = '<span class="gallery-icon">' + (rom[i]||'') + '</span>';
+        }
+        inner += '<span class="gallery-caption">' + g.caption + '</span>';
+        gHTML += '<div class="gallery-item visible"><div class="gallery-item-inner">' + inner + '</div></div>';
+      }
+      document.getElementById('galleryGrid').innerHTML = gHTML;
+
+      document.getElementById('legacyText').innerHTML = data.legacy.paragraphs
+        .filter(function(p){ return p.trim(); })
+        .map(function(p){ return '<p>' + p + '</p>'; }).join('');
+
+      var sHTML = '';
+      for (var i = 0; i < data.legacy.stats.length; i++) {
+        var s = data.legacy.stats[i];
+        sHTML += '<div class="legacy-stat"><div class="legacy-stat-value">' + s.value + '</div>' +
+          '<div class="legacy-stat-label">' + s.label + '</div></div>';
+      }
+      document.getElementById('legacyStats').innerHTML = sHTML;
+
+      document.getElementById('footerBrand').textContent = d.firstName + ' ' + d.lastName;
+    }
+
+    /* =========================================================
+       ACCORDION
+    ========================================================= */
+    function toggleAcc(header) {
+      var body = header.nextElementSibling;
+      var isOpen = header.classList.contains('active');
+      if (isOpen) {
+        header.classList.remove('active');
+        body.style.maxHeight = '0';
+      } else {
+        header.classList.add('active');
+        body.style.maxHeight = body.scrollHeight + 200 + 'px';
+      }
+    }
+
+    /* =========================================================
+       DYNAMIC ENTRIES
+    ========================================================= */
+    function addTimelineEntry(data) {
+      data = data || {};
+      var c = document.getElementById('timelineEntries');
+      var n = c.children.length + 1;
+      var div = document.createElement('div');
+      div.className = 'form-dynamic-entry';
+      div.innerHTML =
+        '<div class="entry-header"><span class="entry-num">Étape ' + n + '</span>' +
+        '<button class="btn-remove" onclick="this.closest(\'.form-dynamic-entry\').remove()">×</button></div>' +
+        '<div class="form-row">' +
+        '<div class="form-group"><label>Année</label><input type="text" class="tl-year" value="' + esc(data.year) + '"></div>' +
+        '<div class="form-group"><label>Lieu</label><input type="text" class="tl-loc" value="' + esc(data.location) + '"></div></div>' +
+        '<div class="form-group"><label>Titre</label><input type="text" class="tl-title" value="' + esc(data.title) + '"></div>' +
+        '<div class="form-group"><label>Description</label><textarea class="tl-desc" rows="3">' + esc(data.description) + '</textarea></div>';
+      c.appendChild(div);
+    }
+
+    function addGalleryEntry(data) {
+      data = data || {};
+      var c = document.getElementById('galleryEntries');
+      var n = c.children.length + 1;
+      var div = document.createElement('div');
+      div.className = 'form-dynamic-entry';
+      div.innerHTML =
+        '<div class="entry-header"><span class="entry-num">Photo ' + n + '</span>' +
+        '<button class="btn-remove" onclick="this.closest(\'.form-dynamic-entry\').remove()">×</button></div>' +
+        '<div class="form-group"><label>URL de l\'image</label><input type="text" class="gl-img" value="' + esc(data.image) + '" placeholder="https://..."></div>' +
+        '<div class="form-group"><label>Ou télécharger</label>' +
+        '<label class="file-label">Choisir un fichier<input type="file" class="gl-file" accept="image/*"></label>' +
+        '<span class="file-name"></span></div>' +
+        '<div class="form-group"><label>Légende</label><input type="text" class="gl-cap" value="' + esc(data.caption) + '"></div>';
+      c.appendChild(div);
+
+      var fileIn = div.querySelector('.gl-file');
+      var imgIn = div.querySelector('.gl-img');
+      var fnSpan = div.querySelector('.file-name');
+      fileIn.addEventListener('change', function() {
+        var f = this.files[0];
+        if (f) {
+          fnSpan.textContent = f.name + ' — chargement...';
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            imgIn.value = e.target.result;
+            fnSpan.textContent = f.name + ' — prêt ✓';
+          };
+          reader.readAsDataURL(f);
+        }
+      });
+    }
+
+    function addStatEntry(data) {
+      data = data || {};
+      var c = document.getElementById('statEntries');
+      var div = document.createElement('div');
+      div.className = 'form-dynamic-entry';
+      div.innerHTML =
+        '<div class="entry-header"><span class="entry-num">Statistique</span>' +
+        '<button class="btn-remove" onclick="this.closest(\'.form-dynamic-entry\').remove()">×</button></div>' +
+        '<div class="form-row">' +
+        '<div class="form-group"><label>Valeur</label><input type="text" class="st-val" value="' + esc(data.value) + '"></div>' +
+        '<div class="form-group"><label>Libellé</label><input type="text" class="st-lab" value="' + esc(data.label) + '"></div></div>';
+      c.appendChild(div);
+    }
+
+    function esc(s) {
+      if (!s) return '';
+      return s.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    /* =========================================================
+       POPULATE FORM
+    ========================================================= */
+    function populateForm(data) {
+      var d = data.identity;
+      document.getElementById('fFirstName').value = d.firstName;
+      document.getElementById('fLastName').value = d.lastName;
+      document.getElementById('fBirthYear').value = d.birthYear;
+      document.getElementById('fDeathYear').value = d.deathYear;
+      document.getElementById('fSubtitle').value = d.subtitle;
+
+      document.getElementById('fIntroQuote').value = data.introduction.quote;
+      document.getElementById('fIntroP1').value = data.introduction.paragraphs[0] || '';
+      document.getElementById('fIntroP2').value = data.introduction.paragraphs[1] || '';
+      document.getElementById('fIntroP3').value = data.introduction.paragraphs[2] || '';
+
+      document.getElementById('timelineEntries').innerHTML = '';
+      data.timeline.forEach(function(e) { addTimelineEntry(e); });
+
+      document.getElementById('fPullText').value = data.pullquote.text;
+      document.getElementById('fPullSource').value = data.pullquote.source;
+
+      document.getElementById('galleryEntries').innerHTML = '';
+      data.gallery.forEach(function(e) { addGalleryEntry(e); });
+
+      document.getElementById('fLegP1').value = data.legacy.paragraphs[0] || '';
+      document.getElementById('fLegP2').value = data.legacy.paragraphs[1] || '';
+      document.getElementById('fLegP3').value = data.legacy.paragraphs[2] || '';
+
+      document.getElementById('statEntries').innerHTML = '';
+      data.legacy.stats.forEach(function(e) { addStatEntry(e); });
+    }
+
+    /* =========================================================
+       EXTRACT FORM DATA
+    ========================================================= */
+    function extractFormData() {
+      var tlEntries = document.querySelectorAll('#timelineEntries .form-dynamic-entry');
+      var timeline = [];
+      tlEntries.forEach(function(el) {
+        timeline.push({
+          year: el.querySelector('.tl-year').value,
+          location: el.querySelector('.tl-loc').value,
+          title: el.querySelector('.tl-title').value,
+          description: el.querySelector('.tl-desc').value
+        });
+      });
+
+      var glEntries = document.querySelectorAll('#galleryEntries .form-dynamic-entry');
+      var gallery = [];
+      glEntries.forEach(function(el) {
+        gallery.push({
+          image: el.querySelector('.gl-img').value,
+          caption: el.querySelector('.gl-cap').value
+        });
+      });
+
+      var stEntries = document.querySelectorAll('#statEntries .form-dynamic-entry');
+      var stats = [];
+      stEntries.forEach(function(el) {
+        stats.push({
+          value: el.querySelector('.st-val').value,
+          label: el.querySelector('.st-lab').value
+        });
+      });
+
+      return {
+        identity: {
+          firstName: document.getElementById('fFirstName').value,
+          lastName: document.getElementById('fLastName').value,
+          birthYear: document.getElementById('fBirthYear').value,
+          deathYear: document.getElementById('fDeathYear').value,
+          subtitle: document.getElementById('fSubtitle').value
+        },
+        introduction: {
+          quote: document.getElementById('fIntroQuote').value,
+          paragraphs: [
+            document.getElementById('fIntroP1').value,
+            document.getElementById('fIntroP2').value,
+            document.getElementById('fIntroP3').value
+          ]
+        },
+        timeline: timeline,
+        pullquote: {
+          text: document.getElementById('fPullText').value,
+          source: document.getElementById('fPullSource').value
+        },
+        gallery: gallery,
+        legacy: {
+          paragraphs: [
+            document.getElementById('fLegP1').value,
+            document.getElementById('fLegP2').value,
+            document.getElementById('fLegP3').value
+          ],
+          stats: stats
+        }
+      };
+    }
+
+    /* =========================================================
+       PANEL OPEN / CLOSE
+    ========================================================= */
+    function openPanel() {
+  var pwd = prompt('Mot de passe :');
+  if (pwd !== EDIT_PASSWORD) {
+    if (pwd !== null) alert('Mot de passe incorrect.');
+    return;
   }
-</style><div><div class="gf-app"></div></div></template></div><veepn-lock-screen><template shadowrootmode="open"><style>html{box-sizing:border-box;text-size-adjust:100%;word-break:normal;tab-size:4}*,:before,:after{background-repeat:no-repeat;box-sizing:border-box}:before,:after{text-decoration:inherit;vertical-align:inherit}*{padding:0;margin:0}hr{overflow:visible;height:0;color:inherit;border:0;border-top:1px solid}details,main{display:block}summary{display:list-item}small{font-size:80%}[hidden]{display:none!important}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}a{background-color:transparent}a:active,a:hover{outline-width:0}code,kbd,pre,samp{font-family:monospace}pre{font-size:1em}b,strong{font-weight:bolder}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{border-color:inherit;text-indent:0}iframe{border-style:none}input{border-radius:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{appearance:none}textarea{overflow:auto;resize:vertical}button,input,optgroup,select,textarea{font:inherit;color:inherit}optgroup{font-weight:700}button{overflow:visible}button,select{text-transform:none}button,[type=button],[type=reset],[type=submit],[role=button]{cursor:pointer}button::-moz-focus-inner,[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner{border-style:none;padding:0}button,html [type=button],[type=reset],[type=submit]{appearance:auto}button,input,select,textarea{background-color:transparent;border-style:none}button:-moz-focusring,[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner{outline:1px dotted ButtonText}select{appearance:none}a:focus,button:focus,input:focus,select:focus,textarea:focus{outline-width:0}select::-ms-expand{display:none}select::-ms-value{color:currentcolor}legend{border:0;color:inherit;display:table;white-space:normal;max-width:100%}::-webkit-file-upload-button{appearance:auto;color:inherit;font:inherit}[disabled]{cursor:default}img{border-style:none}progress{vertical-align:baseline}[aria-busy=true]{cursor:progress}[aria-controls]{cursor:pointer}[aria-disabled=true]{cursor:default}ul,ol{list-style-type:none}figure{margin:0}@keyframes slide-in{0%{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}.gradient-blue{background:radial-gradient(106.41% 128.47% at 50.15% 128.47%,#23abff,#3066ff)}.gradient-green{background:radial-gradient(92.26% 118.88% at 50.15% .13%,#00c3c3,#00aab3)}.gradient-purple{background:radial-gradient(165.12% 115.56% at 50.15% .13%,#a15aff,#00a0eb)}.bg-blue{background-color:#f2f5ff}.bg-purple{background-color:#f7f0ff}.bg-green{background-color:#ebffed}.lock-screen{font-family:FigtreeVF,sans-serif;letter-spacing:normal;position:fixed;z-index:2147483638;right:24px;bottom:24px;width:327px;border-radius:24px;overflow:hidden;box-shadow:0 24px 32px #00000014;animation:slide-in .3s ease-in-out forwards}.lock-screen__content{position:relative;padding:24px 24px 64px}.lock-screen__close{position:absolute;top:16px;right:16px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;opacity:.5}.lock-screen__label{height:26px;width:fit-content;border-radius:50px;background-color:#fff3;padding-inline:16px;display:flex;align-items:center;justify-content:center;gap:8px;color:#fff;font-size:12px;line-height:18px;margin:-8px auto 16px}.lock-screen__title{color:#fff;text-align:center;font-size:20px;line-height:28px;font-weight:600;margin-bottom:8px}.lock-screen__description{color:#f5f6f7;text-align:center;font-size:14px;line-height:20px}.lock-screen__description b{font-weight:600}.lock-screen__card{position:relative;z-index:1;margin-top:-44px;background-color:#fff;border-radius:24px;padding:32px 20px 20px}.lock-screen__inner{margin-bottom:24px}.lock-screen__submit{display:flex;align-items:center;justify-content:center;gap:10px;font-weight:700;font-size:16px;height:40px;width:100%;border-radius:12px;padding-inline:16px;background-color:#f70;color:#fff;margin-bottom:16px}.lock-screen__skip{display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;color:#82829c;margin-inline:auto}.price-card{border:1px solid #f2f2fc;background:linear-gradient(254.14deg,#fafbff .04%,#f5f8ff 100.04%);border-radius:24px;padding:24px 28px}.price-card__label{color:#4a5764;text-align:center;font-size:14px;line-height:20px;text-transform:uppercase;margin-bottom:16px}.price-card__price{display:flex;justify-content:center;align-items:flex-start;column-gap:2px;margin-bottom:12px}.price-card__currency{color:#515478;font-size:18px;line-height:28px}.price-card__number{color:#14142a;text-align:center;font-size:64px;line-height:54px}.price-card__wrap{display:flex;flex-direction:column}.price-card__decimal{color:#515478;font-size:18px;line-height:28px;font-weight:600}.price-card__period{color:#515478;font-size:14px;line-height:20px;margin-top:-6px}.price-card__discount{position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:12px}.price-card__discount-divider{position:absolute;z-index:0;top:50%;left:0;width:100%;height:1px;background-color:#dbe2f9;transform:translateY(-50%)}.price-card__discount-icon{position:absolute;z-index:1;top:50%;left:50%;transform:translate(-50%,-50%)}.price-card__discount-text{position:relative;z-index:2;color:#fff;font-size:12px;font-weight:600;line-height:18px}.price-card__features{display:flex;align-items:center;justify-content:center;column-gap:16px}.price-card__feature{color:#222e3a;font-size:14px;line-height:20px;display:flex;align-items:center;gap:6px}.price-card__feature:before{content:"";display:block;width:4px;height:4px;background-color:#20df9e;border-radius:50%;flex-shrink:0}.features-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.features-list__item{display:flex;flex-direction:column;align-items:center;gap:6px}.features-list__icon{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center}.features-list__text{color:#293a53;text-align:center;font-size:16px;line-height:24px;letter-spacing:-.1px}</style></template><style>@font-face{font-family:FigtreeVF;src:url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2 supports variations"),url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2-variations");font-weight:100 1000;font-display:swap}</style></veepn-lock-screen><div class="pointer-events-none fixed inset-0 z-[54]"><button type="button" aria-label="Chat group" aria-expanded="false" class="pointer-events-auto absolute flex items-center justify-center rounded-[3.125rem] bg-mimo-bg-card text-mimo-icon-n2 shadow-[0_0.25rem_0.9375rem_0_rgba(75,81,115,0.15)] touch-none select-none cursor-pointer transition-[left,top,transform,box-shadow,opacity] duration-300 ease-out hover:scale-[1.02]" style="left: 82.875rem; top: 23.2112rem; width: 2.25rem; height: 2.25rem; opacity: 1;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" class="h-[1.125rem] w-[1.125rem] text-mimo-icon-n2"><path fill="currentColor" fill-rule="evenodd" d="M1.667 1.667h7v7h-7zM3 3v4.333h4.333V3zm7-1.333h4.333V6H10zM11.333 3v1.667H13V3zM4 4h2.333v2.333H4zm8.333 3.333h2v1.333h-2zM1.666 10H6v4.333H1.667zM10 7.333h1.333v1.333H10zm-7 4V13h1.667v-1.667zM10 10h4.333v4.333H10zm1.333 1.333V13H13v-1.667zm-4 0V10h1.333v1.333zm0 3v-2h1.333v2z" clip-rule="evenodd"></path></svg></button></div><script src="./index_files/pubsub.js.téléchargement" async="" defer=""></script></body></html>
+  var data = loadData();
+  populateForm(data);
+  document.getElementById('editPanel').classList.add('open');
+  document.getElementById('panelOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+    function closePanel() {
+      document.getElementById('editPanel').classList.remove('open');
+      document.getElementById('panelOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    /* =========================================================
+       INIT
+    ========================================================= */
+    document.addEventListener('DOMContentLoaded', function() {
+      var data = loadData();
+      renderPage(data);
+
+      document.getElementById('addBtn').addEventListener('click', openPanel);
+      document.getElementById('panelClose').addEventListener('click', closePanel);
+      document.getElementById('panelOverlay').addEventListener('click', closePanel);
+      document.getElementById('btnCancel').addEventListener('click', closePanel);
+
+      document.getElementById('btnSave').addEventListener('click', function() {
+        var data = extractFormData();
+        saveData(data);
+        renderPage(data);
+        closePanel();
+      });
+
+      document.getElementById('btnReset').addEventListener('click', function() {
+        if (confirm('Réinitialiser toute la biographie aux valeurs par défaut ?')) {
+          localStorage.removeItem(STORAGE_KEY);
+          renderPage(defaultData);
+          populateForm(defaultData);
+          closePanel();
+          setTimeout(function(){ openPanel(); }, 400);
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
